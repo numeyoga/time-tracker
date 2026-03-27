@@ -1,0 +1,90 @@
+/* ============================================================
+   Punch Status — .punch-status
+   Summary table for the punch-clock card
+   ============================================================ */
+
+.punch-status {
+  margin-bottom: var(--space-6);
+}
+
+.punch-status__table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 0;
+}
+
+.punch-status__row {
+  display: contents;
+}
+
+.punch-status__row > dt,
+.punch-status__row > dd {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  padding: var(--padding-sm) 0;
+  border-bottom: var(--border-width-thin) solid var(--color-border-subtle);
+}
+
+.punch-status__row:last-child > dt,
+.punch-status__row:last-child > dd {
+  border-bottom: none;
+}
+
+.punch-status__label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  padding-right: var(--space-6);
+  white-space: nowrap;
+}
+
+.punch-status__value {
+  font-size: var(--text-sm);
+  color: var(--color-text-default);
+}
+
+/* Total row — net presence */
+.punch-status__row--total .punch-status__label {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+}
+
+.punch-status__value--counter {
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+}
+
+.punch-status__tick {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* Break detail list */
+.punch-status__break-detail {
+  grid-column: 1 / -1;
+  padding: var(--padding-sm) 0 var(--padding-sm) var(--space-4);
+}
+
+.punch-status__break-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  list-style: none;
+}
+
+.punch-status__break-item {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* Action buttons row */
+.punch-clock__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  border: none;
+  padding: 0;
+  margin: 0;
+}

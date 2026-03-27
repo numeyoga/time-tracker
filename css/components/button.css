@@ -1,0 +1,117 @@
+/* ============================================================
+   Button — .btn
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xs);
+
+  padding: var(--padding-sm) var(--padding-md);
+  min-height: 2.25rem;
+
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-tight);
+  white-space: nowrap;
+
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default),
+    box-shadow var(--duration-fast) var(--ease-default);
+}
+
+/* === Variantes === */
+
+.btn[data-variant="primary"] {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+.btn[data-variant="primary"]:hover {
+  background-color: var(--color-primary-hover);
+}
+.btn[data-variant="primary"]:active {
+  background-color: var(--color-primary-active);
+}
+
+.btn[data-variant="secondary"] {
+  background-color: var(--color-bg-default);
+  color: var(--color-text-default);
+  border-color: var(--color-border-default);
+}
+.btn[data-variant="secondary"]:hover {
+  background-color: var(--color-bg-subtle);
+  border-color: var(--color-border-strong);
+}
+
+.btn[data-variant="danger"] {
+  background-color: var(--color-danger);
+  color: var(--color-text-on-primary);
+}
+.btn[data-variant="danger"]:hover {
+  background-color: var(--color-danger-text);
+}
+
+.btn[data-variant="ghost"] {
+  background-color: transparent;
+  color: var(--color-text-default);
+}
+.btn[data-variant="ghost"]:hover {
+  background-color: var(--color-bg-subtle);
+}
+
+.btn[data-variant="link"] {
+  background-color: transparent;
+  color: var(--color-primary);
+  padding-inline: 0;
+  min-height: auto;
+  border-radius: 0;
+}
+.btn[data-variant="link"]:hover {
+  text-decoration: underline;
+}
+
+/* === Tailles === */
+
+.btn[data-size="xs"] {
+  padding: var(--padding-xs) var(--padding-xs);
+  min-height: 1.5rem;
+  font-size: var(--text-xs);
+}
+.btn[data-size="sm"] {
+  padding: var(--padding-xs) var(--padding-sm);
+  min-height: 1.75rem;
+  font-size: var(--text-sm);
+}
+.btn[data-size="lg"] {
+  padding: var(--padding-md) var(--padding-lg);
+  min-height: 2.75rem;
+  font-size: var(--text-md);
+}
+
+/* === États === */
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn[aria-pressed="true"] {
+  background-color: var(--color-bg-muted);
+}
+
+/* === Sous-éléments === */
+
+.btn__icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}

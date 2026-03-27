@@ -1,0 +1,46 @@
+/* ============================================================
+   Card — .card
+   ============================================================ */
+
+.card {
+  display: flex;
+  flex-direction: column;
+
+  background-color: var(--color-bg-default);
+  border: var(--border-width-default) solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+
+  overflow: hidden;
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-sm);
+  padding: var(--padding-md) var(--padding-lg);
+
+  border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+}
+
+.card__title {
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+}
+
+.card__body {
+  padding: var(--padding-lg);
+  flex: 1;
+}
+
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--gap-sm);
+  padding: var(--padding-md) var(--padding-lg);
+
+  border-top: var(--border-width-default) solid var(--color-border-subtle);
+}

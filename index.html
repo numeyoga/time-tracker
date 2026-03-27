@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time Tracker</title>
+
+    <!-- Design tokens en premier -->
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/utilities.css" />
+
+    <!-- Composants -->
+    <link rel="stylesheet" href="css/components/topbar.css" />
+    <link rel="stylesheet" href="css/components/sidenav.css" />
+    <link rel="stylesheet" href="css/components/button.css" />
+    <link rel="stylesheet" href="css/components/card.css" />
+    <link rel="stylesheet" href="css/components/modal.css" />
+    <link rel="stylesheet" href="css/components/toast.css" />
+    <link rel="stylesheet" href="css/components/punch-status.css" />
+  </head>
+  <body>
+
+    <div class="app-shell" data-js-app-shell>
+
+      <!-- Top Bar -->
+      <header class="app-shell__topbar" role="banner">
+        <div class="topbar">
+
+          <a class="topbar__brand" href="/" aria-label="Time Tracker — Accueil">
+            <span class="topbar__brand-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </span>
+            <span class="topbar__brand-name">Time Tracker</span>
+          </a>
+
+          <div class="topbar__actions" role="toolbar" aria-label="Actions globales">
+            <button class="topbar__action-btn" type="button" aria-label="Paramètres">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+            </button>
+          </div>
+
+        </div>
+      </header>
+
+      <!-- Side Nav -->
+      <nav class="app-shell__sidenav" aria-label="Navigation principale">
+        <div class="sidenav" data-js-sidenav>
+          <ul class="sidenav__list">
+            <li>
+              <a class="sidenav__item" href="/" aria-current="page" data-js-sidenav-item>
+                <svg class="sidenav__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <span class="sidenav__label">Aujourd'hui</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main content -->
+      <main class="app-shell__main" id="main-content">
+
+        <div class="page" data-js-today-page>
+
+          <!-- Page header -->
+          <div class="page__header">
+            <div class="page__header-start">
+              <h1 class="page__title">Aujourd'hui</h1>
+              <p class="page__subtitle">
+                <time data-js-today-date></time>
+              </p>
+            </div>
+          </div>
+
+          <!-- Page body -->
+          <div class="page__body">
+
+            <!-- Punch Clock Card -->
+            <article class="card" data-js-punch-clock style="max-width: 36rem;">
+
+              <header class="card__header">
+                <h2 class="card__title">Pointage</h2>
+              </header>
+
+              <div class="card__body">
+
+                <!-- Status summary table -->
+                <div class="punch-status" data-js-punch-status>
+                  <dl class="punch-status__table">
+
+                    <div class="punch-status__row" data-js-status-row="arrival">
+                      <dt class="punch-status__label">Arrivée</dt>
+                      <dd class="punch-status__value">
+                        <span data-js-arrival-time>—</span>
+                        <button
+                          class="btn"
+                          data-variant="ghost"
+                          data-size="xs"
+                          data-js-edit-arrival
+                          type="button"
+                          aria-label="Modifier l'heure d'arrivée"
+                          hidden
+                        >
+                          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                          </svg>
+                        </button>
+                      </dd>
+                    </div>
+
+                    <div class="punch-status__row" data-js-status-row="departure">
+                      <dt class="punch-status__label">Départ</dt>
+                      <dd class="punch-status__value">
+                        <span data-js-departure-time>—</span>
+                        <button
+                          class="btn"
+                          data-variant="ghost"
+                          data-size="xs"
+                          data-js-edit-departure
+                          type="button"
+                          aria-label="Modifier l'heure de départ"
+                          hidden
+                        >
+                          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                          </svg>
+                        </button>
+                      </dd>
+                    </div>
+
+                    <div class="punch-status__row" data-js-status-row="breaks">
+                      <dt class="punch-status__label">Pauses</dt>
+                      <dd class="punch-status__value">
+                        <span data-js-breaks-summary>—</span>
+                        <button
+                          class="btn"
+                          data-variant="ghost"
+                          data-size="xs"
+                          data-js-toggle-breaks-detail
+                          type="button"
+                          aria-expanded="false"
+                          aria-label="Afficher le détail des pauses"
+                          hidden
+                        >
+                          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                            <polyline points="6 9 12 15 18 9"/>
+                          </svg>
+                        </button>
+                      </dd>
+                    </div>
+
+                    <!-- Break detail (collapsed by default) -->
+                    <div class="punch-status__break-detail" data-js-breaks-detail hidden>
+                      <ol class="punch-status__break-list" data-js-break-list></ol>
+                    </div>
+
+                    <div class="punch-status__row punch-status__row--total">
+                      <dt class="punch-status__label">Présence nette</dt>
+                      <dd class="punch-status__value punch-status__value--counter">
+                        <span data-js-net-presence aria-live="polite" aria-atomic="true">—</span>
+                        <span class="punch-status__tick" data-js-tick-indicator aria-hidden="true" hidden>⏱</span>
+                      </dd>
+                    </div>
+
+                  </dl>
+                </div><!-- /.punch-status -->
+
+                <!-- Action buttons -->
+                <fieldset class="punch-clock__actions">
+                  <legend class="sr-only">Actions de pointage</legend>
+
+                  <button
+                    class="btn"
+                    data-variant="primary"
+                    data-js-btn-arrive
+                    type="button"
+                  >
+                    Arrivée
+                  </button>
+
+                  <button
+                    class="btn"
+                    data-variant="secondary"
+                    data-js-btn-depart
+                    type="button"
+                    disabled
+                  >
+                    Départ
+                  </button>
+
+                  <button
+                    class="btn"
+                    data-variant="secondary"
+                    data-js-btn-start-break
+                    type="button"
+                    disabled
+                  >
+                    Début pause
+                  </button>
+
+                  <button
+                    class="btn"
+                    data-variant="secondary"
+                    data-js-btn-end-break
+                    type="button"
+                    hidden
+                  >
+                    Fin pause
+                  </button>
+
+                </fieldset><!-- /.punch-clock__actions -->
+
+                <!-- Live region for state changes (screen readers) -->
+                <p id="punch-clock-state-msg" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+
+              </div><!-- /.card__body -->
+            </article><!-- /.card -->
+
+          </div><!-- /.page__body -->
+        </div><!-- /.page -->
+
+      </main>
+
+    </div><!-- /.app-shell -->
+
+    <!-- Edit Time Dialog — shared for arrival and departure correction -->
+    <dialog
+      class="modal"
+      id="edit-time-dialog"
+      data-js-edit-time-dialog
+      aria-labelledby="edit-time-dialog-title"
+      aria-modal="true"
+    >
+      <div class="modal__header">
+        <h2 class="modal__title" id="edit-time-dialog-title">Modifier l'heure</h2>
+        <button
+          class="btn"
+          data-variant="ghost"
+          data-size="sm"
+          data-js-dialog-close
+          type="button"
+          aria-label="Fermer"
+        >
+          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="form-field">
+          <label class="form-field__label" for="edit-time-input">Heure</label>
+          <input
+            class="input"
+            type="time"
+            id="edit-time-input"
+            data-js-time-input
+            required
+            step="60"
+          />
+          <p class="form-field__error" data-js-edit-error hidden role="alert"></p>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn" data-variant="secondary" data-js-dialog-cancel type="button">
+          Annuler
+        </button>
+        <button class="btn" data-variant="primary" data-js-dialog-confirm type="button">
+          Confirmer
+        </button>
+      </div>
+    </dialog>
+
+    <!-- Toast container -->
+    <output
+      class="toast-container"
+      data-js-toast-container
+      aria-live="polite"
+      aria-label="Notifications"
+    ></output>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

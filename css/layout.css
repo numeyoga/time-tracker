@@ -1,0 +1,232 @@
+/* =============================================================================
+   LAYOUT — App Shell & Grille de contenu
+   Structure CSS Grid de l'application.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   APP SHELL
+   --------------------------------------------------------------------------- */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: var(--shell-nav-width) 1fr;
+  grid-template-rows: var(--shell-topbar-height) 1fr var(--shell-statusbar-height, 0px);
+  grid-template-areas:
+    "topbar  topbar"
+    "sidenav main"
+    "status  status";
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.app-shell__topbar {
+  grid-area: topbar;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+}
+
+.app-shell__sidenav {
+  grid-area: sidenav;
+  overflow-y: auto;
+}
+
+.app-shell__main {
+  grid-area: main;
+  overflow-y: auto;
+  padding: var(--shell-main-padding);
+}
+
+.app-shell__status {
+  grid-area: status;
+}
+
+/* Side Nav rétractable */
+.app-shell[data-nav-collapsed] {
+  grid-template-columns: var(--shell-nav-width-collapsed) 1fr;
+}
+
+/* ---------------------------------------------------------------------------
+   RESPONSIVE APP SHELL
+   --------------------------------------------------------------------------- */
+
+/* Desktop compact (1024–1279px) : nav collapsée par défaut */
+@media (max-width: 1279px) {
+  .app-shell {
+    grid-template-columns: var(--shell-nav-width-collapsed) 1fr;
+  }
+}
+
+/* Tablette (768–1023px) : nav en overlay */
+@media (max-width: 1023px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "topbar"
+      "main"
+      "status";
+  }
+
+  .app-shell__sidenav {
+    position: fixed;
+    left: 0;
+    top: var(--shell-topbar-height);
+    bottom: 0;
+    width: var(--shell-nav-width);
+    transform: translateX(-100%);
+    transition: transform var(--duration-normal) var(--ease-out);
+    z-index: var(--z-overlay);
+  }
+
+  .app-shell__sidenav[data-open] {
+    transform: translateX(0);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   GRILLE DE CONTENU (12 colonnes)
+   --------------------------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  gap: var(--gap-md);
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.col-1  { grid-column: span 1; }
+.col-2  { grid-column: span 2; }
+.col-3  { grid-column: span 3; }
+.col-4  { grid-column: span 4; }
+.col-5  { grid-column: span 5; }
+.col-6  { grid-column: span 6; }
+.col-7  { grid-column: span 7; }
+.col-8  { grid-column: span 8; }
+.col-9  { grid-column: span 9; }
+.col-10 { grid-column: span 10; }
+.col-11 { grid-column: span 11; }
+.col-12 { grid-column: span 12; }
+
+/* Grilles utilitaires */
+.grid-cols-1 { grid-template-columns: 1fr; }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-cols-6 { grid-template-columns: repeat(6, 1fr); }
+
+.grid-auto {
+  grid-template-columns: repeat(auto-fit, minmax(var(--grid-auto-min, 280px), 1fr));
+}
+
+/* Gaps */
+.gap-xs { gap: var(--gap-xs); }
+.gap-sm { gap: var(--gap-sm); }
+.gap-md { gap: var(--gap-md); }
+.gap-lg { gap: var(--gap-lg); }
+.gap-xl { gap: var(--gap-xl); }
+
+/* Responsive grille */
+@media (max-width: 1279px) {
+  .grid { grid-template-columns: repeat(8, 1fr); }
+  .col-9, .col-10, .col-11, .col-12 { grid-column: 1 / -1; }
+}
+
+@media (max-width: 1023px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+  .col-5, .col-6, .col-7, .col-8 { grid-column: 1 / -1; }
+}
+
+@media (max-width: 767px) {
+  .grid { grid-template-columns: 1fr; }
+  [class*="col-"] { grid-column: 1 / -1; }
+}
+
+/* ---------------------------------------------------------------------------
+   CONTENEURS
+   --------------------------------------------------------------------------- */
+
+.container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--padding-lg);
+}
+
+.container--sm   { max-width: 640px; }
+.container--md   { max-width: 896px; }
+.container--lg   { max-width: 1152px; }
+.container--xl   { max-width: 1440px; }
+.container--full { max-width: none; }
+
+/* ---------------------------------------------------------------------------
+   PAGE LAYOUT
+   --------------------------------------------------------------------------- */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+  height: 100%;
+}
+
+.page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  gap: var(--gap-md);
+  min-height: 3rem;
+}
+
+.page__header-start {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+}
+
+.page__header-end {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.page__body {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   UTILITAIRES DE LAYOUT
+   --------------------------------------------------------------------------- */
+
+.flex          { display: flex; }
+.flex-col      { flex-direction: column; }
+.flex-wrap     { flex-wrap: wrap; }
+.flex-1        { flex: 1 1 0%; }
+.flex-auto     { flex: 1 1 auto; }
+.flex-none     { flex: none; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+.items-start    { align-items: flex-start; }
+.items-center   { align-items: center; }
+.items-end      { align-items: flex-end; }
+.items-stretch  { align-items: stretch; }
+.items-baseline { align-items: baseline; }
+
+.justify-start   { justify-content: flex-start; }
+.justify-center  { justify-content: center; }
+.justify-end     { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+
+.overflow-auto   { overflow: auto; }
+.overflow-hidden { overflow: hidden; }
+.overflow-y-auto { overflow-y: auto; }
+.overflow-x-auto { overflow-x: auto; }
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed    { position: fixed; }
+.sticky   { position: sticky; top: 0; }
+
+.w-full  { width: 100%; }
+.h-full  { height: 100%; }
+.min-h-0 { min-height: 0; }
+.min-w-0 { min-width: 0; }

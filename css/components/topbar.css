@@ -1,0 +1,86 @@
+/* =============================================================================
+   TOPBAR — Bandeau supérieur de l'application
+   Région fixe en haut de l'App Shell. Pleine largeur, hauteur 48px.
+   ============================================================================= */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+  height: var(--shell-topbar-height);
+  padding-inline: var(--padding-lg);
+  background-color: var(--color-bg-default);
+  border-bottom: var(--border-width-default) solid var(--color-border-default);
+  box-shadow: var(--shadow-xs);
+}
+
+/* --- Partie gauche : identité de l'application --- */
+
+.topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.topbar__brand:hover {
+  text-decoration: none;
+}
+
+.topbar__brand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-on-primary);
+  flex-shrink: 0;
+}
+
+.topbar__brand-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.topbar__brand-name {
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+/* --- Partie droite : actions globales --- */
+
+.topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  flex-shrink: 0;
+}
+
+.topbar__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-subtle);
+  transition: background-color var(--duration-fast) var(--ease-default),
+              color var(--duration-fast) var(--ease-default);
+}
+
+.topbar__action-btn:hover {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-default);
+}
+
+.topbar__action-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
