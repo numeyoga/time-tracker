@@ -25,7 +25,7 @@
   display: block;
   width: 100%;
   padding: var(--padding-sm) var(--space-10) var(--padding-sm) var(--padding-md);
-  min-height: 2.25rem;
+  min-height: var(--component-height-control);
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: var(--leading-normal);

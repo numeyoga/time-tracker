@@ -41,6 +41,7 @@ import {
 import { initTimelineOverview, renderTimelineOverview } from '../components/timeline-overview.js';
 import { initReportStats } from '../components/report-stats.js';
 import { openEntryManagementDrawer } from '../components/entry-management-drawer.js';
+import { applyPunchTimeEdit, validatePunchChronology } from '../utils/punch-edit.js';
 import { initDataTransfer } from '../components/data-transfer.js';
 
 // ============================================================
@@ -81,7 +82,7 @@ const startInlineEdit = (item, clockRoot) => {
     const breakIndex = item.dataset.breakIndex == null ? null : Number(item.dataset.breakIndex);
     const newMs = timeStrToMs(newTime);
 
-    const updated = applyTimeEdit(entry, punchType, breakIndex, newMs);
+    const updated = applyPunchTimeEdit(entry, punchType, breakIndex, newMs);
     if (!updated) {
       showToast({ message: 'Heure invalide : incohérence chronologique.', variant: 'danger' });
       cancel();
@@ -108,51 +109,6 @@ const startInlineEdit = (item, clockRoot) => {
   });
 };
 
-/**
- * Applies a time edit to the entry, returning a new entry or null if invalid.
- */
-const applyTimeEdit = (entry, punchType, breakIndex, newMs) => {
-  const updated = structuredClone(entry);
-
-  switch (punchType) {
-    case 'arrival':
-      updated.arrivedAt = newMs;
-      break;
-    case 'departure':
-      updated.departedAt = newMs;
-      break;
-    case 'breakStart':
-      updated.breaks[breakIndex].startAt = newMs;
-      break;
-    case 'breakEnd':
-      updated.breaks[breakIndex].endAt = newMs;
-      break;
-    default:
-      return null;
-  }
-
-  if (!validateChronology(updated)) return null;
-  return updated;
-};
-
-/**
- * Validates that all punch times are in chronological order.
- */
-const validateChronology = (entry) => {
-  const times = [entry.arrivedAt];
-
-  for (const b of entry.breaks) {
-    times.push(b.startAt);
-    if (b.endAt != null) times.push(b.endAt);
-  }
-
-  if (entry.departedAt != null) times.push(entry.departedAt);
-
-  for (let i = 1; i < times.length; i++) {
-    if (times[i] <= times[i - 1]) return false;
-  }
-  return true;
-};
 
 // ============================================================
 // Delete punch

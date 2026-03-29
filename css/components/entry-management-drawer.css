@@ -67,8 +67,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  inline-size: 2rem;
-  block-size: 2rem;
+  inline-size: var(--component-icon-size-md);
+  block-size: var(--component-icon-size-md);
   border-radius: var(--radius-full);
   background-color: var(--color-bg-default);
 }
@@ -106,7 +106,7 @@
 }
 
 .entry-management__item-time {
-  min-width: 3.5rem;
+  min-width: var(--component-time-min-width);
   font-family: var(--font-mono);
   font-size: var(--text-base);
   font-weight: var(--font-weight-semibold);
@@ -122,7 +122,7 @@
 }
 
 .entry-management__time-input {
-  width: 6.5rem;
+  width: var(--component-time-input-width);
 }
 
 .entry-management__item-error {

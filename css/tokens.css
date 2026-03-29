@@ -204,6 +204,15 @@
   --shell-main-padding:        var(--padding-lg);
 
   /* ===========================================================================
+     COMPONENT SIZES
+     =========================================================================== */
+
+  --component-height-control:   2.25rem;         /* 36px — hauteur minimale des contrôles interactifs (bouton, input, select, tab) */
+  --component-icon-size-md:     var(--space-8);  /* 32px — conteneur d'icône medium */
+  --component-time-min-width:   3.5rem;          /* 56px — largeur minimale d'un affichage HH:MM */
+  --component-time-input-width: 6.5rem;          /* 104px — largeur d'un champ de saisie HH:MM */
+
+  /* ===========================================================================
      BREAKPOINTS
      =========================================================================== */
 

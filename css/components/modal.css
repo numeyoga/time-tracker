@@ -88,7 +88,7 @@
   background-color: var(--color-bg-default);
   border: var(--border-width-default) solid var(--color-border-default);
   border-radius: var(--radius-sm);
-  min-height: 2.25rem;
+  min-height: var(--component-height-control);
   transition: border-color var(--duration-fast) var(--ease-default),
               box-shadow var(--duration-fast) var(--ease-default);
 }

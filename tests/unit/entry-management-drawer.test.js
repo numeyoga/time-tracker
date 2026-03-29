@@ -1,10 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   addPunchToEntry,
-  applyPunchTimeEdit,
   filterEntriesForManagement,
-  validatePunchChronology,
 } from '../../js/components/entry-management-drawer.js';
+import {
+  applyPunchTimeEdit,
+  validatePunchChronology,
+} from '../../js/utils/punch-edit.js';
 
 const localStorageMock = (() => {
   let store = {};
