@@ -1,0 +1,124 @@
+/* ============================================================
+   Timer Card — .timer-card
+   Chronomètre projet : affiche les sessions actives
+   ============================================================ */
+
+.timer-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+
+  background-color: var(--color-bg-default);
+  border: var(--border-width-default) dashed var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--padding-md) var(--padding-lg);
+}
+
+/* Active state — solid border */
+.timer-card[data-active] {
+  border-style: solid;
+  border-color: var(--color-info);
+}
+
+/* ---- Header row ---- */
+
+.timer-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  flex-wrap: wrap;
+}
+
+.timer-card__status {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-subtle);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.timer-card__time {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-default);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.timer-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+}
+
+/* ---- Sessions zone (chips) ---- */
+
+.timer-sessions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.timer-sessions__header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+}
+
+.timer-sessions__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- Timer Chip ---- */
+
+.timer-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  padding: var(--space-1) var(--space-2);
+
+  background-color: var(--color-info-subtle);
+  border: var(--border-width-default) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+}
+
+.timer-chip__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-success);
+  flex-shrink: 0;
+  animation: timer-chip-pulse 2s ease-in-out infinite;
+}
+
+@keyframes timer-chip-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.timer-chip__name {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-default);
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.timer-chip__time {
+  color: var(--color-text-subtle);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

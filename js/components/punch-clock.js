@@ -1,4 +1,4 @@
-import { msToHHMM, formatDuration, computeNetPresence, computeTotalBreakDuration } from '../utils/time.js';
+import { msToHHMM, formatDuration, computeNetPresence } from '../utils/time.js';
 
 // ============================================================
 // State machine
@@ -61,31 +61,16 @@ export const applyEvent = (entry, event) => {
 };
 
 // ============================================================
-// DOM rendering — helpers
+// Constants
 // ============================================================
 
-const renderBreaksSummary = (entry, el) => {
-  const breakCount = entry?.breaks?.length ?? 0;
-  if (breakCount === 0) { el.textContent = '—'; return; }
-  const last = entry.breaks.at(-1);
-  if (last.endAt == null) { el.textContent = 'En pause…'; return; }
-  const totalMs = computeTotalBreakDuration(entry);
-  el.textContent = `${formatDuration(totalMs)} (${breakCount} pause${breakCount > 1 ? 's' : ''})`;
-};
+const OBJECTIVE_MS = 8 * 60 * 60 * 1000; // 8h in ms
 
-const renderBreakList = (entry, listEl) => {
-  if (!entry?.breaks?.length) return;
-  listEl.replaceChildren(
-    ...entry.breaks.map((b, i) => {
-      const li = document.createElement('li');
-      li.className = 'punch-status__break-item';
-      const start = msToHHMM(b.startAt);
-      const end = b.endAt ? msToHHMM(b.endAt) : '…';
-      const dur = b.endAt ? ` — ${formatDuration(b.endAt - b.startAt)}` : '';
-      li.textContent = `Pause ${i + 1} : ${start} – ${end}${dur}`;
-      return li;
-    })
-  );
+const BADGE_CONFIG = {
+  IDLE:      { variant: 'neutral', label: 'Non commencée' },
+  PRESENT:   { variant: 'info',    label: 'En cours' },
+  ON_BREAK:  { variant: 'warning', label: 'En pause' },
+  DEPARTED:  { variant: 'success', label: 'Journée terminée' },
 };
 
 const STATE_MESSAGES = {
@@ -95,45 +80,186 @@ const STATE_MESSAGES = {
   DEPARTED: 'Journée terminée.',
 };
 
+const PUNCH_TYPES = {
+  arrival:    { label: 'Arrivée',     icon: '#icon-log-in',  color: 'success' },
+  breakStart: { label: 'Début pause', icon: '#icon-pause',   color: 'warning' },
+  breakEnd:   { label: 'Fin pause',   icon: '#icon-play',    color: 'info' },
+  departure:  { label: 'Départ',      icon: '#icon-log-out', color: 'danger' },
+};
+
+// ============================================================
+// DOM rendering — helpers
+// ============================================================
+
+const createSvgIcon = (href, { className = 'icon', size, color } = {}) => {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', className);
+  svg.setAttribute('aria-hidden', 'true');
+  if (size) svg.dataset.size = size;
+  if (color) svg.dataset.color = color;
+  const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+  use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', href);
+  svg.appendChild(use);
+  return svg;
+};
+
+/**
+ * Builds a flat list of punch events from an entry, sorted chronologically.
+ * Each item: { type, label, icon, color, ms, breakIndex? }
+ */
+export const buildPunchList = (entry) => {
+  if (entry?.arrivedAt == null) return [];
+
+  const punches = [];
+
+  punches.push({
+    type: 'arrival',
+    ...PUNCH_TYPES.arrival,
+    ms: entry.arrivedAt,
+  });
+
+  entry.breaks.forEach((b, i) => {
+    punches.push({
+      type: 'breakStart',
+      ...PUNCH_TYPES.breakStart,
+      ms: b.startAt,
+      breakIndex: i,
+    });
+    if (b.endAt) {
+      punches.push({
+        type: 'breakEnd',
+        ...PUNCH_TYPES.breakEnd,
+        ms: b.endAt,
+        breakIndex: i,
+      });
+    }
+  });
+
+  if (entry.departedAt != null) {
+    punches.push({
+      type: 'departure',
+      ...PUNCH_TYPES.departure,
+      ms: entry.departedAt,
+    });
+  }
+
+  return punches.sort((a, b) => a.ms - b.ms);
+};
+
+const createPunchListItem = (punch) => {
+  const li = document.createElement('li');
+  li.className = 'punch-list__item';
+  li.dataset.jsPunchItem = '';
+  li.dataset.punchType = punch.type;
+  if (punch.breakIndex != null) li.dataset.breakIndex = String(punch.breakIndex);
+
+  // Icon
+  li.appendChild(createSvgIcon(punch.icon, {
+    className: 'icon punch-list__icon',
+    size: 'sm',
+    color: punch.color,
+  }));
+
+  // Label
+  const labelSpan = document.createElement('span');
+  labelSpan.className = 'punch-list__label';
+  labelSpan.textContent = punch.label;
+  li.appendChild(labelSpan);
+
+  // Time display
+  const timeSpan = document.createElement('span');
+  timeSpan.className = 'punch-list__time';
+  timeSpan.dataset.jsPunchTime = '';
+  timeSpan.textContent = msToHHMM(punch.ms);
+  li.appendChild(timeSpan);
+
+  // Action buttons
+  const actionsSpan = document.createElement('span');
+  actionsSpan.className = 'punch-list__actions';
+
+  const editBtn = document.createElement('button');
+  editBtn.className = 'btn';
+  editBtn.type = 'button';
+  editBtn.dataset.variant = 'ghost';
+  editBtn.dataset.size = 'sm';
+  editBtn.dataset.jsEditPunch = '';
+  editBtn.setAttribute('aria-label', `Modifier l'heure de ${punch.label.toLowerCase()}`);
+  editBtn.appendChild(createSvgIcon('#icon-pencil'));
+  actionsSpan.appendChild(editBtn);
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.className = 'btn';
+  deleteBtn.type = 'button';
+  deleteBtn.dataset.variant = 'ghost';
+  deleteBtn.dataset.size = 'sm';
+  deleteBtn.dataset.jsDeletePunch = '';
+  deleteBtn.setAttribute('aria-label', `Supprimer le pointage ${punch.label.toLowerCase()}`);
+  deleteBtn.appendChild(createSvgIcon('#icon-trash'));
+  actionsSpan.appendChild(deleteBtn);
+
+  li.appendChild(actionsSpan);
+
+  return li;
+};
+
 // ============================================================
 // DOM rendering — main
 // ============================================================
 
-const renderStatusValues = (entry, state, root) => {
-  const arrivalEl = root.querySelector('[data-js-arrival-time]');
-  const departureEl = root.querySelector('[data-js-departure-time]');
-  const breaksSummaryEl = root.querySelector('[data-js-breaks-summary]');
-  const netPresenceEl = root.querySelector('[data-js-net-presence]');
-  const tickEl = root.querySelector('[data-js-tick-indicator]');
-  const breakList = root.querySelector('[data-js-break-list]');
-
-  if (arrivalEl) arrivalEl.textContent = msToHHMM(entry?.arrivedAt);
-  if (departureEl) departureEl.textContent = msToHHMM(entry?.departedAt);
-  if (breaksSummaryEl) renderBreaksSummary(entry, breaksSummaryEl);
-  if (netPresenceEl) {
-    const net = computeNetPresence(entry);
-    netPresenceEl.textContent = net == null ? '—' : formatDuration(net);
-  }
-  if (tickEl) tickEl.hidden = state === 'IDLE' || state === 'DEPARTED';
-  if (breakList) renderBreakList(entry, breakList);
+const renderBadge = (state, root) => {
+  const badge = root.querySelector('[data-js-punch-badge]');
+  if (!badge) return;
+  const config = BADGE_CONFIG[state];
+  badge.dataset.variant = config.variant;
+  badge.textContent = config.label;
 };
 
-const renderButtons = (entry, state, root) => {
+const renderMetrics = (entry, state, root) => {
+  const timeEl = root.querySelector('[data-js-presence-time]');
+  const progressEl = root.querySelector('[data-js-presence-progress]');
+  const objectiveEl = root.querySelector('[data-js-presence-objective]');
+
+  const net = computeNetPresence(entry);
+
+  if (timeEl) {
+    timeEl.textContent = net == null ? '—' : formatDuration(net);
+  }
+
+  if (progressEl && net != null) {
+    const pct = Math.min(100, Math.round((net / OBJECTIVE_MS) * 100));
+    progressEl.textContent = `${pct}% /8h`;
+  } else if (progressEl) {
+    progressEl.textContent = '';
+  }
+
+  if (objectiveEl) {
+    if (net != null && net >= OBJECTIVE_MS) {
+      objectiveEl.textContent = 'Objectif atteint !';
+      objectiveEl.hidden = false;
+    } else {
+      objectiveEl.hidden = true;
+    }
+  }
+};
+
+const renderButtons = (state, root) => {
   const btnArrive = root.querySelector('[data-js-btn-arrive]');
   const btnDepart = root.querySelector('[data-js-btn-depart]');
   const btnStartBreak = root.querySelector('[data-js-btn-start-break]');
   const btnEndBreak = root.querySelector('[data-js-btn-end-break]');
-  const editArrival = root.querySelector('[data-js-edit-arrival]');
-  const editDeparture = root.querySelector('[data-js-edit-departure]');
-  const toggleBreakDetail = root.querySelector('[data-js-toggle-breaks-detail]');
 
   if (btnArrive) btnArrive.disabled = state !== 'IDLE';
   if (btnDepart) btnDepart.disabled = state !== 'PRESENT';
   if (btnStartBreak) btnStartBreak.disabled = state !== 'PRESENT';
-  if (btnEndBreak) btnEndBreak.hidden = state !== 'ON_BREAK';
-  if (editArrival) editArrival.hidden = state === 'IDLE';
-  if (editDeparture) editDeparture.hidden = state !== 'DEPARTED';
-  if (toggleBreakDetail) toggleBreakDetail.hidden = (entry?.breaks?.length ?? 0) === 0;
+  if (btnEndBreak) btnEndBreak.disabled = state !== 'ON_BREAK';
+};
+
+const renderPunchList = (entry, root) => {
+  const listEl = root.querySelector('[data-js-punch-list]');
+  if (!listEl) return;
+
+  const punches = buildPunchList(entry);
+  listEl.replaceChildren(...punches.map(createPunchListItem));
 };
 
 /**
@@ -144,8 +270,10 @@ const renderButtons = (entry, state, root) => {
  */
 export const renderPunchClock = (entry, root) => {
   const state = deriveState(entry);
-  renderStatusValues(entry, state, root);
-  renderButtons(entry, state, root);
+  renderBadge(state, root);
+  renderMetrics(entry, state, root);
+  renderButtons(state, root);
+  renderPunchList(entry, root);
 
   const stateMsg = root.querySelector('[data-js-state-msg]') ??
     document.getElementById('punch-clock-state-msg');
@@ -156,7 +284,6 @@ export const renderPunchClock = (entry, root) => {
 // Event listeners (delegation)
 // ============================================================
 
-// Keys are camelCase dataset property names (data-js-btn-arrive → jsBtnArrive)
 const EVENT_MAP = {
   jsBtnArrive:     'ARRIVE',
   jsBtnDepart:     'DEPART',
@@ -174,25 +301,13 @@ export const initPunchClockListeners = (root, onEvent) => {
   const handler = (e) => {
     const btn = e.target.closest(
       'button[data-js-btn-arrive], button[data-js-btn-depart], ' +
-      'button[data-js-btn-start-break], button[data-js-btn-end-break], ' +
-      'button[data-js-toggle-breaks-detail]'
+      'button[data-js-btn-start-break], button[data-js-btn-end-break]'
     );
     if (!btn) return;
 
-    // Convert data-js-btn-* to camelCase dataset key and look up in EVENT_MAP
     const dsKey = Object.keys(btn.dataset).find((k) => k.startsWith('jsBtn'));
     if (dsKey && EVENT_MAP[dsKey]) {
       onEvent(EVENT_MAP[dsKey]);
-      return;
-    }
-
-    // Toggle break detail
-    if ('jsToggleBreaksDetail' in btn.dataset) {
-      const detail = root.querySelector('[data-js-breaks-detail]');
-      if (detail) {
-        detail.hidden = !detail.hidden;
-        btn.setAttribute('aria-expanded', String(!detail.hidden));
-      }
     }
   };
 
@@ -216,17 +331,59 @@ export const startLiveCounter = (root, getEntry) => {
 
   const tick = () => {
     const entry = getEntry();
-    if (deriveState(entry) === 'DEPARTED') {
+    const state = deriveState(entry);
+    if (state === 'DEPARTED' || state === 'IDLE') {
       clearInterval(id);
       return;
     }
-    const netEl = root.querySelector('[data-js-net-presence]');
-    if (netEl) {
-      const net = computeNetPresence(entry);
-      netEl.textContent = net != null ? formatDuration(net) : '—';
-    }
+    renderMetrics(entry, state, root);
   };
 
   id = setInterval(tick, 30_000);
   return () => clearInterval(id);
+};
+
+// ============================================================
+// Delete confirmation dialog
+// ============================================================
+
+/**
+ * Opens the delete confirmation dialog and returns a Promise.
+ * Resolves to true if confirmed, false if cancelled.
+ * @param {string} punchLabel — e.g. "Arrivée"
+ * @returns {Promise<boolean>}
+ */
+export const openDeleteDialog = (punchLabel) => {
+  const dialog = document.querySelector('[data-js-delete-dialog]');
+  if (!dialog) return Promise.resolve(false);
+
+  const messageEl = dialog.querySelector('[data-js-delete-dialog-message]');
+  if (messageEl) {
+    messageEl.textContent = `Êtes-vous sûr de vouloir supprimer le pointage « ${punchLabel} » ?`;
+  }
+
+  return new Promise((resolve) => {
+    const cleanup = () => {
+      dialog.close();
+      confirmBtn.removeEventListener('click', onConfirm);
+      cancelBtn.removeEventListener('click', onCancel);
+      closeBtn.removeEventListener('click', onCancel);
+      dialog.removeEventListener('close', onDialogClose);
+    };
+
+    const onConfirm = () => { cleanup(); resolve(true); };
+    const onCancel = () => { cleanup(); resolve(false); };
+    const onDialogClose = () => { cleanup(); resolve(false); };
+
+    const confirmBtn = dialog.querySelector('[data-js-delete-dialog-confirm]');
+    const cancelBtn = dialog.querySelector('[data-js-delete-dialog-cancel]');
+    const closeBtn = dialog.querySelector('[data-js-delete-dialog-close]');
+
+    confirmBtn.addEventListener('click', onConfirm);
+    cancelBtn.addEventListener('click', onCancel);
+    closeBtn.addEventListener('click', onCancel);
+    dialog.addEventListener('close', onDialogClose);
+
+    dialog.showModal();
+  });
 };

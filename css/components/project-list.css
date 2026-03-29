@@ -1,0 +1,47 @@
+/* ============================================================
+   Project List — .project-list
+   List of projects with name, time, and action buttons
+   ============================================================ */
+
+.project-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.project-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--padding-sm) 0;
+  border-bottom: var(--border-width-default) solid var(--color-border-subtle);
+}
+
+.project-list__item:last-child {
+  border-bottom: none;
+}
+
+.project-list__name {
+  flex: 1;
+  min-width: 0;
+
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-default);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-list__time {
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-subtle);
+  white-space: nowrap;
+}
+
+.project-list__actions {
+  display: flex;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}

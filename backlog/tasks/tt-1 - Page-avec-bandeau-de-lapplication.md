@@ -4,13 +4,14 @@ title: Page avec bandeau de l'application
 status: Done
 assignee: []
 created_date: '2026-03-27 19:58'
-updated_date: '2026-03-27 20:01'
+updated_date: '2026-03-29 13:11'
 labels:
   - code
   - design
   - ui
 dependencies: []
 priority: high
+ordinal: 2000
 ---
 
 ## Description

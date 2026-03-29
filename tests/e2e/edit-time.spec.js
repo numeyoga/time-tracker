@@ -6,77 +6,126 @@ test.beforeEach(async ({ page }) => {
   await page.reload();
 });
 
-test.describe('Correction manuelle de l\'heure', () => {
-  test('le crayon d\'arrivée est visible après l\'arrivée', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'Modifier l\'heure d\'arrivée' })).not.toBeVisible();
+test.describe('Modification inline des pointages', () => {
+  test('le crayon d\'arrivée est visible dans la punch list après arrivée', async ({ page }) => {
     await page.getByRole('button', { name: 'Arrivée', exact: true }).click();
-    await expect(page.getByRole('button', { name: 'Modifier l\'heure d\'arrivée' })).toBeVisible();
+
+    // Open details to see the punch list
+    await page.locator('[data-js-punch-details] summary').click();
+
+    const editBtn = page.locator('[data-punch-type="arrival"] [data-js-edit-punch]');
+    await expect(editBtn).toBeVisible();
   });
 
-  test('la modale d\'édition s\'ouvre avec l\'heure pré-remplie', async ({ page }) => {
+  test('clic sur le crayon affiche un input time inline', async ({ page }) => {
     await page.getByRole('button', { name: 'Arrivée', exact: true }).click();
-    await page.getByRole('button', { name: 'Modifier l\'heure d\'arrivée' }).click();
+    await page.locator('[data-js-punch-details] summary').click();
 
-    const dialog = page.getByRole('dialog');
-    await expect(dialog).toBeVisible();
+    await page.locator('[data-punch-type="arrival"] [data-js-edit-punch]').click();
 
-    const input = dialog.locator('[data-js-time-input]');
+    const input = page.locator('[data-punch-type="arrival"] .punch-list__time-input');
+    await expect(input).toBeVisible();
     const value = await input.inputValue();
     expect(value).toMatch(/^\d{2}:\d{2}$/);
   });
 
-  test('confirmer une nouvelle heure met à jour l\'affichage', async ({ page }) => {
+  test('confirmer une nouvelle heure (Enter) met à jour l\'affichage', async ({ page }) => {
     await page.getByRole('button', { name: 'Arrivée', exact: true }).click();
-    await page.getByRole('button', { name: 'Modifier l\'heure d\'arrivée' }).click();
+    await page.locator('[data-js-punch-details] summary').click();
 
-    const dialog = page.getByRole('dialog');
-    const input = dialog.locator('[data-js-time-input]');
+    await page.locator('[data-punch-type="arrival"] [data-js-edit-punch]').click();
+    const input = page.locator('[data-punch-type="arrival"] .punch-list__time-input');
     await input.fill('07:00');
-    await dialog.getByRole('button', { name: 'Confirmer' }).click();
+    await input.press('Enter');
 
-    await expect(dialog).not.toBeVisible();
-    await expect(page.locator('[data-js-arrival-time]')).toHaveText('07:00');
+    // After render, the time span should show the new time
+    const timeSpan = page.locator('[data-punch-type="arrival"] [data-js-punch-time]');
+    await expect(timeSpan).toHaveText('07:00');
   });
 
-  test('annuler ne modifie pas l\'heure', async ({ page }) => {
+  test('Escape annule l\'édition sans modifier l\'heure', async ({ page }) => {
     await page.getByRole('button', { name: 'Arrivée', exact: true }).click();
-    const originalTime = await page.locator('[data-js-arrival-time]').textContent();
+    await page.locator('[data-js-punch-details] summary').click();
 
-    await page.getByRole('button', { name: 'Modifier l\'heure d\'arrivée' }).click();
-    const dialog = page.getByRole('dialog');
-    const input = dialog.locator('[data-js-time-input]');
+    const originalTime = await page.locator('[data-punch-type="arrival"] [data-js-punch-time]').textContent();
+
+    await page.locator('[data-punch-type="arrival"] [data-js-edit-punch]').click();
+    const input = page.locator('[data-punch-type="arrival"] .punch-list__time-input');
     await input.fill('06:00');
+    await input.press('Escape');
+
+    const timeSpan = page.locator('[data-punch-type="arrival"] [data-js-punch-time]');
+    await expect(timeSpan).toHaveText(originalTime);
+  });
+
+  test('heure incohérente affiche un toast d\'erreur', async ({ page }) => {
+    await page.getByRole('button', { name: 'Arrivée', exact: true }).click();
+    await page.getByRole('button', { name: 'Départ', exact: true }).click();
+    await page.locator('[data-js-punch-details] summary').click();
+
+    // Try to set departure before arrival
+    await page.locator('[data-punch-type="departure"] [data-js-edit-punch]').click();
+    const input = page.locator('[data-punch-type="departure"] .punch-list__time-input');
+    await input.fill('00:01');
+    await input.press('Enter');
+
+    // Should show error toast
+    const toast = page.locator('[data-js-toast-container]');
+    await expect(toast).toContainText('incohérence chronologique');
+  });
+});
+
+test.describe('Suppression des pointages', () => {
+  test('la poubelle ouvre la modale de confirmation', async ({ page }) => {
+    await page.getByRole('button', { name: 'Arrivée', exact: true }).click();
+    await page.locator('[data-js-punch-details] summary').click();
+
+    await page.locator('[data-punch-type="arrival"] [data-js-delete-punch]').click();
+
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeVisible();
+    await expect(dialog).toContainText('supprimer');
+  });
+
+  test('annuler la suppression ne modifie rien', async ({ page }) => {
+    await page.getByRole('button', { name: 'Arrivée', exact: true }).click();
+    await page.locator('[data-js-punch-details] summary').click();
+
+    await page.locator('[data-punch-type="arrival"] [data-js-delete-punch]').click();
+
+    const dialog = page.getByRole('dialog');
     await dialog.getByRole('button', { name: 'Annuler' }).click();
 
     await expect(dialog).not.toBeVisible();
-    await expect(page.locator('[data-js-arrival-time]')).toHaveText(originalTime);
+    // Arrival still exists
+    await expect(page.locator('[data-js-punch-badge]')).toHaveText('En cours');
   });
 
-  test('le crayon de départ est visible uniquement après le départ', async ({ page }) => {
+  test('confirmer la suppression de l\'arrivée réinitialise la journée', async ({ page }) => {
     await page.getByRole('button', { name: 'Arrivée', exact: true }).click();
-    await expect(page.getByRole('button', { name: 'Modifier l\'heure de départ' })).not.toBeVisible();
+    await page.locator('[data-js-punch-details] summary').click();
 
-    await page.getByRole('button', { name: 'Départ', exact: true }).click();
-    await expect(page.getByRole('button', { name: 'Modifier l\'heure de départ' })).toBeVisible();
-  });
+    await page.locator('[data-punch-type="arrival"] [data-js-delete-punch]').click();
 
-  test('validation : départ dans le futur refusé', async ({ page }) => {
-    await page.getByRole('button', { name: 'Arrivée', exact: true }).click();
-    await page.getByRole('button', { name: 'Départ', exact: true }).click();
-
-    await page.getByRole('button', { name: 'Modifier l\'heure de départ' }).click();
     const dialog = page.getByRole('dialog');
-    const input = dialog.locator('[data-js-time-input]');
-    await input.fill('23:59');
-    await dialog.getByRole('button', { name: 'Confirmer' }).click();
+    await dialog.getByRole('button', { name: 'Supprimer' }).click();
 
-    // If 23:59 is in the future, error shown; otherwise it's accepted (depends on test time)
-    // We just ensure the dialog handles it (either stays open with error or closes if valid)
-    // The important thing is no crash
-    const isOpen = await dialog.isVisible();
-    if (isOpen) {
-      const errorEl = dialog.locator('[data-js-edit-error]');
-      await expect(errorEl).toBeVisible();
-    }
+    await expect(dialog).not.toBeVisible();
+    // Back to initial state
+    await expect(page.locator('[data-js-punch-badge]')).toHaveText('Non commencée');
+    await expect(page.getByRole('button', { name: 'Arrivée', exact: true })).toBeEnabled();
+  });
+
+  test('supprimer le départ réouvre la journée', async ({ page }) => {
+    await page.getByRole('button', { name: 'Arrivée', exact: true }).click();
+    await page.getByRole('button', { name: 'Départ', exact: true }).click();
+    await page.locator('[data-js-punch-details] summary').click();
+
+    await page.locator('[data-punch-type="departure"] [data-js-delete-punch]').click();
+    await page.getByRole('dialog').getByRole('button', { name: 'Supprimer' }).click();
+
+    // Back to PRESENT state
+    await expect(page.locator('[data-js-punch-badge]')).toHaveText('En cours');
+    await expect(page.getByRole('button', { name: 'Départ', exact: true })).toBeEnabled();
   });
 });

@@ -1,10 +1,11 @@
 ---
 id: TT-4
 title: Chronomètre projet avec mode multi-projet
-status: To Do
-assignee: []
+status: Done
+assignee:
+  - claude
 created_date: '2026-03-27 21:55'
-updated_date: '2026-03-27 22:19'
+updated_date: '2026-03-29 11:32'
 labels:
   - code
   - design
@@ -188,19 +189,45 @@ Le bouton Play dans `.project-list__item` bascule selon l'état :
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Conteneur : `<article class="card">` avec bordure dashed/outlined, layout `.card__body` en ligne unique (badge + statut + durée + boutons + toggle)
-- [ ] #2 Badge `.badge[data-variant="neutral"]` 'Chronomètre' (inactif) ou `.badge[data-variant="info"]` (actif)
-- [ ] #3 Statut textuel : 'Aucun projet en cours' (IDLE), nom du projet (SINGLE), 'N projets actifs' (MULTI)
-- [ ] #4 Durée totale affichée en temps réel (Xh Xm), mise à jour chaque seconde via `setInterval`, calculée depuis `startedAt`
-- [ ] #5 Bouton Play dans `.project-list__item` (TT-3) démarre le chronomètre en 1 clic — `icon-play`, `.btn[data-variant="ghost"][data-size="sm"]`
-- [ ] #6 Bouton bascule en Stop quand le projet est actif — `icon-square`, couleur danger, `aria-label="Arrêter le chronomètre pour [nom]"`
-- [ ] #7 Toggle `.toggle` 'Multi-projet' (`role="switch"`) : activé = plusieurs projets simultanés, désactivé = un seul
-- [ ] #8 Mode mono-projet : démarrer un projet arrête automatiquement le projet en cours (stop + enregistrement session)
-- [ ] #9 Bouton 'Arrêter' `.btn[data-variant="warning"]` arrête le dernier projet démarré (`:disabled` si IDLE)
-- [ ] #10 Bouton 'Tout arrêter' `.btn[data-variant="danger"]` visible uniquement si 2+ projets actifs, stoppe toutes les sessions
-- [ ] #11 Zone `.timer-sessions` avec chips `.timer-chip` par session active : dot vert + nom + durée live + `.btn` ghost sm stop (`icon-square`, `aria-label`)
-- [ ] #12 Badge compteur `.badge[data-variant="info"]` dans `.timer-sessions` affichant le nombre de sessions actives
+- [x] #1 Conteneur : `<article class="card">` avec bordure dashed/outlined, layout `.card__body` en ligne unique (badge + statut + durée + boutons + toggle)
+- [x] #2 Badge `.badge[data-variant="neutral"]` 'Chronomètre' (inactif) ou `.badge[data-variant="info"]` (actif)
+- [x] #3 Statut textuel : 'Aucun projet en cours' (IDLE), nom du projet (SINGLE), 'N projets actifs' (MULTI)
+- [x] #4 Durée totale affichée en temps réel (Xh Xm), mise à jour chaque seconde via `setInterval`, calculée depuis `startedAt`
+- [x] #5 Bouton Play dans `.project-list__item` (TT-3) démarre le chronomètre en 1 clic — `icon-play`, `.btn[data-variant="ghost"][data-size="sm"]`
+- [x] #6 Bouton bascule en Stop quand le projet est actif — `icon-square`, couleur danger, `aria-label="Arrêter le chronomètre pour [nom]"`
+- [x] #7 Toggle `.toggle` 'Multi-projet' (`role="switch"`) : activé = plusieurs projets simultanés, désactivé = un seul
+- [x] #8 Mode mono-projet : démarrer un projet arrête automatiquement le projet en cours (stop + enregistrement session)
+- [x] #9 Bouton 'Arrêter' `.btn[data-variant="warning"]` arrête le dernier projet démarré (`:disabled` si IDLE)
+- [x] #10 Bouton 'Tout arrêter' `.btn[data-variant="danger"]` visible uniquement si 2+ projets actifs, stoppe toutes les sessions
+- [x] #11 Zone `.timer-sessions` avec chips `.timer-chip` par session active : dot vert + nom + durée live + `.btn` ghost sm stop (`icon-square`, `aria-label`)
+- [x] #12 Badge compteur `.badge[data-variant="info"]` dans `.timer-sessions` affichant le nombre de sessions actives
 - [ ] #13 Heure de début d'une session en cours modifiable via icône crayon (`icon-pencil`) dans le chip ou la liste projets
-- [ ] #14 Persistance localStorage : sessions avec `id`, `projectId`, `startedAt`, `endedAt` (null si en cours), `duration` (null si en cours)
-- [ ] #15 Tokens CSS Covenant exclusifs, sélecteurs JS via `data-js-*`, focus visible, cibles ≥ 24×24 px, WCAG 2.2 AA
+- [x] #14 Persistance localStorage : sessions avec `id`, `projectId`, `startedAt`, `endedAt` (null si en cours), `duration` (null si en cours)
+- [x] #15 Tokens CSS Covenant exclusifs, sélecteurs JS via `data-js-*`, focus visible, cibles ≥ 24×24 px, WCAG 2.2 AA
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+## TT-4 — Chronomètre projet avec mode multi-projet — Résumé final
+
+### Fichiers créés
+- `js/storage/sessions.js` — Couche CRUD sessions localStorage (startSession, stopSession, stopAllActiveSessions, stopSessionForProject, deleteSessionsForProject, getActiveSessions, getActiveSessionForProject, getTodayDurationForProject, isMultiProjectEnabled, setMultiProjectEnabled)
+- `js/components/timer-card.js` — Rendu timer card + live counter 1s (deriveTimerState, renderTimerCard, updateTimerTimes, startTimerLiveCounter)
+- `css/components/timer-card.css` — Timer card (dashed/solid border), header row, sessions zone, timer chips avec dot pulsé
+- `css/components/toggle.css` — Toggle switch Covenant (role="switch", aria-checked, focus-visible)
+
+### Fichiers modifiés
+- `index.html` — Timer card HTML entre punch clock et projets, icon-square dans sprite SVG, imports CSS toggle + timer-card
+- `js/components/project-list.js` — Play/Stop toggle (icon-play/icon-square, data-active), durée jour par projet, updateProjectListTimes()
+- `js/pages/today.js` — initTimer() (toggle, stop, stop-all, chip stop, live counter), initProjects() reçoit timerRoot + refreshAll pour synchronisation bidirectionnelle
+
+### Tests
+- 28 tests unitaires (`tests/unit/sessions.test.js`) : getAllSessions, startSession, stopSession, getActiveSessions, getActiveSessionForProject, stopAllActiveSessions, stopSessionForProject, deleteSessionsForProject, getTodayDurationForProject, multi-project toggle
+- 16 tests e2e (`tests/e2e/timer.spec.js`) : état IDLE, toggle par défaut, play/stop depuis projets, multi-projet (chips + stop individuel + tout arrêter), mode mono (auto-stop), bouton arrêter (dernier démarré), persistance sessions + toggle, suppression projet avec sessions
+
+### Non implémenté
+- AC #13 (modification heure de début via crayon) — reporté, nécessite un dialog dédié
+
+### Résultat : 168 tests verts (120 unit + 48 e2e)
+<!-- SECTION:FINAL_SUMMARY:END -->

@@ -1,10 +1,10 @@
 ---
 id: TT-3
 title: Gestion des projets (CRUD)
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:55'
-updated_date: '2026-03-27 22:15'
+updated_date: '2026-03-29 11:18'
 labels:
   - code
   - design
@@ -140,16 +140,40 @@ Section "Projets" de la page d'accueil. Gestion CRUD des projets et point d'entr
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Conteneur : `<section class="card">` avec `.card__header` (titre 'Projets') et `.card__body` (toolbar + liste)
-- [ ] #2 Toolbar : 2 boutons pleine largeur — 'Ajouter du temps' `.btn[data-variant="primary"]` (icon-clock, → TT-5) et 'Ajouter un projet' `.btn[data-variant="secondary"]` (icon-plus)
-- [ ] #3 Clic 'Ajouter un projet' ouvre `<dialog>` modale avec `.form-field` + `.input` pour saisir le nom
-- [ ] #4 Validation nom : non vide, pas uniquement des espaces, unique insensible à la casse — `.form-field__error` + `aria-invalid` si invalide, bouton 'Ajouter' `:disabled` tant qu'invalide
-- [ ] #5 Liste `.project-list` : chaque `.project-list__item` affiche nom (tronqué si overflow), durée jour (Xh Xm), 4 boutons `.btn[data-variant="ghost"][data-size="sm"]`
-- [ ] #6 Boutons d'action avec `aria-label` contextuel : Play (`icon-play`, → TT-4), Crayon (`icon-pencil`), Calendrier (`icon-calendar`, → TT-6), Poubelle (`icon-trash`)
-- [ ] #7 Renommage via `<dialog>` : input pré-rempli, mêmes validations que création, met à jour le nom dans projets et sessions associées
-- [ ] #8 Suppression via `<dialog>` confirmation : `.alert[data-variant="warning"]` avec nom du projet et conséquence, bouton `.btn[data-variant="danger"]`, arrête le chrono si actif
-- [ ] #9 État vide Covenant (pattern 04 §9) quand aucun projet : icône icon-folder, titre, description, bouton création
-- [ ] #10 Ordre stable par `createdAt`, persistance localStorage avec `id` (crypto.randomUUID()), `name`, `createdAt`
-- [ ] #11 Toasts success après chaque action CRUD (création, renommage, suppression)
-- [ ] #12 Tokens CSS Covenant exclusifs, sélecteurs JS via `data-js-*`, focus visible, cibles ≥ 24×24 px, WCAG 2.2 AA
+- [x] #1 Conteneur : `<section class="card">` avec `.card__header` (titre 'Projets') et `.card__body` (toolbar + liste)
+- [x] #2 Toolbar : 2 boutons pleine largeur — 'Ajouter du temps' `.btn[data-variant="primary"]` (icon-clock, → TT-5) et 'Ajouter un projet' `.btn[data-variant="secondary"]` (icon-plus)
+- [x] #3 Clic 'Ajouter un projet' ouvre `<dialog>` modale avec `.form-field` + `.input` pour saisir le nom
+- [x] #4 Validation nom : non vide, pas uniquement des espaces, unique insensible à la casse — `.form-field__error` + `aria-invalid` si invalide, bouton 'Ajouter' `:disabled` tant qu'invalide
+- [x] #5 Liste `.project-list` : chaque `.project-list__item` affiche nom (tronqué si overflow), durée jour (Xh Xm), 4 boutons `.btn[data-variant="ghost"][data-size="sm"]`
+- [x] #6 Boutons d'action avec `aria-label` contextuel : Play (`icon-play`, → TT-4), Crayon (`icon-pencil`), Calendrier (`icon-calendar`, → TT-6), Poubelle (`icon-trash`)
+- [x] #7 Renommage via `<dialog>` : input pré-rempli, mêmes validations que création, met à jour le nom dans projets et sessions associées
+- [x] #8 Suppression via `<dialog>` confirmation : `.alert[data-variant="warning"]` avec nom du projet et conséquence, bouton `.btn[data-variant="danger"]`, arrête le chrono si actif
+- [x] #9 État vide Covenant (pattern 04 §9) quand aucun projet : icône icon-folder, titre, description, bouton création
+- [x] #10 Ordre stable par `createdAt`, persistance localStorage avec `id` (crypto.randomUUID()), `name`, `createdAt`
+- [x] #11 Toasts success après chaque action CRUD (création, renommage, suppression)
+- [x] #12 Tokens CSS Covenant exclusifs, sélecteurs JS via `data-js-*`, focus visible, cibles ≥ 24×24 px, WCAG 2.2 AA
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+## TT-3 — Gestion des projets (CRUD) — Résumé final
+
+### Fichiers créés
+- `js/storage/projects.js` — Couche CRUD localStorage (getAllProjects, getProjectById, createProject, renameProject, deleteProject, validateProjectName)
+- `js/components/project-list.js` — Rendu DOM + dialogues Promise-based (renderProjectList, openCreateProjectDialog, openRenameProjectDialog, openDeleteProjectDialog)
+- `css/components/project-list.css` — Liste projets BEM (item, name, time, actions)
+- `css/components/empty-state.css` — Pattern état vide Covenant
+- `css/components/form-field.css` — Champ formulaire + input avec tous les états
+- `css/components/alert.css` — Composant alerte avec variantes (info, success, warning, danger)
+
+### Fichiers modifiés
+- `index.html` — Section projets (card, toolbar, liste, empty state) + 3 dialogs (création, renommage, suppression)
+- `js/pages/today.js` — Orchestration projets : initProjects() avec event delegation pour create/rename/delete/play/history
+
+### Tests
+- 24 tests unitaires (`tests/unit/projects.test.js`) : getAllProjects, getProjectById, createProject, renameProject, deleteProject, validateProjectName
+- 16 tests e2e (`tests/e2e/projects.spec.js`) : empty state, création (toolbar + empty state + validation + Enter + cancel), renommage (pré-rempli + update + cancel), suppression (warning + confirm + cancel), persistance reload
+
+### Résultat : 128 tests verts (92 unit + 36 e2e)
+<!-- SECTION:FINAL_SUMMARY:END -->

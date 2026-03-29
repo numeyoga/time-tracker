@@ -1,0 +1,81 @@
+/* ============================================================
+   Toggle Switch — .toggle
+   Covenant design system — role="switch" pattern
+   ============================================================ */
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle__track {
+  position: relative;
+  width: 2.25rem;
+  height: 1.25rem;
+
+  background-color: var(--color-bg-muted);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-full);
+
+  transition: background-color var(--duration-normal) var(--ease-default),
+              border-color var(--duration-normal) var(--ease-default);
+}
+
+.toggle__thumb {
+  position: absolute;
+  top: 50%;
+  left: var(--space-0-5);
+  transform: translateY(-50%);
+
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-default);
+  box-shadow: var(--shadow-xs);
+
+  transition: left var(--duration-normal) var(--ease-default);
+}
+
+/* Checked state */
+.toggle[aria-checked="true"] .toggle__track {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.toggle[aria-checked="true"] .toggle__thumb {
+  left: calc(100% - 0.875rem - var(--space-0-5));
+}
+
+/* Hover */
+.toggle:hover .toggle__track {
+  border-color: var(--color-border-strong);
+}
+
+.toggle[aria-checked="true"]:hover .toggle__track {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* Focus visible */
+.toggle:focus-visible {
+  outline: var(--border-width-thick) solid var(--color-focus-ring);
+  outline-offset: var(--space-0-5);
+  border-radius: var(--radius-sm);
+}
+
+/* Disabled */
+.toggle[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.toggle__label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-subtle);
+  white-space: nowrap;
+}

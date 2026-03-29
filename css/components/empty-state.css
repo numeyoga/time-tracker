@@ -1,0 +1,33 @@
+/* ============================================================
+   Empty State — .empty-state
+   Displayed when a list or section has no content
+   ============================================================ */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-md);
+
+  padding: var(--space-16) var(--padding-lg);
+  text-align: center;
+}
+
+.empty-state__icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-text-placeholder);
+}
+
+.empty-state__title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+}
+
+.empty-state__description {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  max-width: 28rem;
+}

@@ -17,11 +17,99 @@
     <link rel="stylesheet" href="css/components/sidenav.css" />
     <link rel="stylesheet" href="css/components/button.css" />
     <link rel="stylesheet" href="css/components/card.css" />
+    <link rel="stylesheet" href="css/components/badge.css" />
+    <link rel="stylesheet" href="css/components/icon.css" />
     <link rel="stylesheet" href="css/components/modal.css" />
     <link rel="stylesheet" href="css/components/toast.css" />
-    <link rel="stylesheet" href="css/components/punch-status.css" />
+    <link rel="stylesheet" href="css/components/punch-metrics.css" />
+    <link rel="stylesheet" href="css/components/punch-actions.css" />
+    <link rel="stylesheet" href="css/components/punch-list.css" />
+    <link rel="stylesheet" href="css/components/project-list.css" />
+    <link rel="stylesheet" href="css/components/empty-state.css" />
+    <link rel="stylesheet" href="css/components/form-field.css" />
+    <link rel="stylesheet" href="css/components/alert.css" />
+    <link rel="stylesheet" href="css/components/toggle.css" />
+    <link rel="stylesheet" href="css/components/timer-card.css" />
+    <link rel="stylesheet" href="css/components/add-time-modal.css" />
+    <link rel="stylesheet" href="css/components/project-history-drawer.css" />
   </head>
   <body>
+
+    <!-- SVG Sprite (Lucide icons) -->
+    <svg xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true">
+      <defs>
+        <symbol id="icon-log-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+          <polyline points="10 17 15 12 10 7"/>
+          <line x1="15" y1="12" x2="3" y2="12"/>
+        </symbol>
+        <symbol id="icon-log-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </symbol>
+        <symbol id="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="14" y="4" width="4" height="16" rx="1"/>
+          <rect x="6" y="4" width="4" height="16" rx="1"/>
+        </symbol>
+        <symbol id="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="6 3 20 12 6 21 6 3"/>
+        </symbol>
+        <symbol id="icon-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+          <path d="m15 5 4 4"/>
+        </symbol>
+        <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18"/>
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+          <line x1="10" y1="11" x2="10" y2="17"/>
+          <line x1="14" y1="11" x2="14" y2="17"/>
+        </symbol>
+        <symbol id="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18"/>
+          <path d="m6 6 12 12"/>
+        </symbol>
+        <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </symbol>
+        <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/>
+          <path d="M12 5v14"/>
+        </symbol>
+        <symbol id="icon-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 2v4"/>
+          <path d="M16 2v4"/>
+          <rect width="18" height="18" x="3" y="4" rx="2"/>
+          <path d="M3 10h18"/>
+        </symbol>
+        <symbol id="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>
+        </symbol>
+        <symbol id="icon-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2"/>
+        </symbol>
+        <symbol id="icon-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/>
+          <path d="M12 9v4"/>
+          <path d="M12 17h.01"/>
+        </symbol>
+        <symbol id="icon-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15.2 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.8a2 2 0 0 0-.59-1.42l-3.8-3.8A2 2 0 0 0 15.2 3Z"/>
+          <path d="M17 21v-8H7v8"/>
+          <path d="M7 3v5h8"/>
+        </symbol>
+        <symbol id="icon-calendar-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.2 4.2A2 2 0 0 0 3 6v12a2 2 0 0 0 2 2h13"/>
+          <path d="M16 2v4"/>
+          <path d="M8 2v4"/>
+          <path d="M3 10h7"/>
+          <path d="M21 10v8a2 2 0 0 1-2 2"/>
+          <path d="m3 3 18 18"/>
+        </symbol>
+      </defs>
+    </svg>
 
     <div class="app-shell" data-js-app-shell>
 
@@ -90,144 +178,151 @@
             <article class="card" data-js-punch-clock style="max-width: 36rem;">
 
               <header class="card__header">
-                <h2 class="card__title">Pointage</h2>
-              </header>
+                <div>
+                  <span class="badge" data-variant="neutral" data-js-punch-badge>Non commencée</span>
+                  <h2 class="card__title">Pointage</h2>
+                </div>
 
-              <div class="card__body">
+                <div class="punch-metrics" data-js-punch-metrics>
+                  <span class="punch-metrics__time" data-js-presence-time>—</span>
+                  <span class="punch-metrics__progress" data-js-presence-progress></span>
+                  <span class="punch-metrics__objective" data-js-presence-objective hidden></span>
+                </div>
 
-                <!-- Status summary table -->
-                <div class="punch-status" data-js-punch-status>
-                  <dl class="punch-status__table">
-
-                    <div class="punch-status__row" data-js-status-row="arrival">
-                      <dt class="punch-status__label">Arrivée</dt>
-                      <dd class="punch-status__value">
-                        <span data-js-arrival-time>—</span>
-                        <button
-                          class="btn"
-                          data-variant="ghost"
-                          data-size="xs"
-                          data-js-edit-arrival
-                          type="button"
-                          aria-label="Modifier l'heure d'arrivée"
-                          hidden
-                        >
-                          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                          </svg>
-                        </button>
-                      </dd>
-                    </div>
-
-                    <div class="punch-status__row" data-js-status-row="departure">
-                      <dt class="punch-status__label">Départ</dt>
-                      <dd class="punch-status__value">
-                        <span data-js-departure-time>—</span>
-                        <button
-                          class="btn"
-                          data-variant="ghost"
-                          data-size="xs"
-                          data-js-edit-departure
-                          type="button"
-                          aria-label="Modifier l'heure de départ"
-                          hidden
-                        >
-                          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                          </svg>
-                        </button>
-                      </dd>
-                    </div>
-
-                    <div class="punch-status__row" data-js-status-row="breaks">
-                      <dt class="punch-status__label">Pauses</dt>
-                      <dd class="punch-status__value">
-                        <span data-js-breaks-summary>—</span>
-                        <button
-                          class="btn"
-                          data-variant="ghost"
-                          data-size="xs"
-                          data-js-toggle-breaks-detail
-                          type="button"
-                          aria-expanded="false"
-                          aria-label="Afficher le détail des pauses"
-                          hidden
-                        >
-                          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                            <polyline points="6 9 12 15 18 9"/>
-                          </svg>
-                        </button>
-                      </dd>
-                    </div>
-
-                    <!-- Break detail (collapsed by default) -->
-                    <div class="punch-status__break-detail" data-js-breaks-detail hidden>
-                      <ol class="punch-status__break-list" data-js-break-list></ol>
-                    </div>
-
-                    <div class="punch-status__row punch-status__row--total">
-                      <dt class="punch-status__label">Présence nette</dt>
-                      <dd class="punch-status__value punch-status__value--counter">
-                        <span data-js-net-presence aria-live="polite" aria-atomic="true">—</span>
-                        <span class="punch-status__tick" data-js-tick-indicator aria-hidden="true" hidden>⏱</span>
-                      </dd>
-                    </div>
-
-                  </dl>
-                </div><!-- /.punch-status -->
-
-                <!-- Action buttons -->
-                <fieldset class="punch-clock__actions">
+                <fieldset class="punch-actions" data-js-punch-actions>
                   <legend class="sr-only">Actions de pointage</legend>
 
                   <button
-                    class="btn"
-                    data-variant="primary"
+                    class="punch-actions__btn"
+                    type="button"
                     data-js-btn-arrive
-                    type="button"
                   >
-                    Arrivée
+                    <svg class="icon" aria-hidden="true"><use href="#icon-log-in"></use></svg>
+                    <span>Arrivée</span>
                   </button>
 
                   <button
-                    class="btn"
-                    data-variant="secondary"
-                    data-js-btn-depart
+                    class="punch-actions__btn"
                     type="button"
-                    disabled
-                  >
-                    Départ
-                  </button>
-
-                  <button
-                    class="btn"
-                    data-variant="secondary"
                     data-js-btn-start-break
-                    type="button"
                     disabled
                   >
-                    Début pause
+                    <svg class="icon" aria-hidden="true"><use href="#icon-pause"></use></svg>
+                    <span>Pause</span>
                   </button>
 
                   <button
-                    class="btn"
-                    data-variant="secondary"
-                    data-js-btn-end-break
+                    class="punch-actions__btn"
                     type="button"
-                    hidden
+                    data-js-btn-end-break
+                    disabled
                   >
-                    Fin pause
+                    <svg class="icon" aria-hidden="true"><use href="#icon-play"></use></svg>
+                    <span>Reprise</span>
                   </button>
 
-                </fieldset><!-- /.punch-clock__actions -->
+                  <button
+                    class="punch-actions__btn"
+                    type="button"
+                    data-js-btn-depart
+                    disabled
+                  >
+                    <svg class="icon" aria-hidden="true"><use href="#icon-log-out"></use></svg>
+                    <span>Départ</span>
+                  </button>
 
-                <!-- Live region for state changes (screen readers) -->
-                <p id="punch-clock-state-msg" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+                </fieldset>
+              </header>
 
-              </div><!-- /.card__body -->
+              <div class="card__body">
+                <details class="punch-details" data-js-punch-details>
+                  <summary>Pointages d'aujourd'hui</summary>
+                  <ul class="punch-list" data-js-punch-list></ul>
+                </details>
+              </div>
+
+              <!-- Live region for state changes (screen readers) -->
+              <p id="punch-clock-state-msg" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+
             </article><!-- /.card -->
+
+            <!-- Timer Card (Chronomètre) -->
+            <article class="timer-card" data-js-timer-card style="max-width: 36rem;">
+              <div class="timer-card__header">
+                <span class="badge" data-variant="neutral" data-js-timer-badge>Chronomètre</span>
+                <span class="timer-card__status" data-js-timer-status>Aucun projet en cours</span>
+                <span class="timer-card__time" data-js-timer-time>0h00</span>
+
+                <div class="timer-card__actions">
+                  <button class="btn" data-variant="ghost" data-size="sm" type="button"
+                          data-js-timer-stop disabled aria-label="Arrêter le chronomètre">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-square"></use></svg>
+                    <span class="btn__label">Arrêter</span>
+                  </button>
+                  <button class="btn" data-variant="danger" data-size="sm" type="button"
+                          data-js-timer-stop-all hidden aria-label="Tout arrêter">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-square"></use></svg>
+                    <span class="btn__label">Tout arrêter</span>
+                  </button>
+
+                  <div class="toggle" role="switch" aria-checked="true" tabindex="0"
+                       data-js-timer-multi-toggle aria-label="Mode multi-projet">
+                    <span class="toggle__track">
+                      <span class="toggle__thumb"></span>
+                    </span>
+                    <span class="toggle__label">Multi-projet</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Active sessions (chips) — rendered by JS when active -->
+              <div class="timer-sessions" data-js-timer-sessions hidden>
+                <div class="timer-sessions__header">
+                  <span>Sessions actives</span>
+                  <span class="badge" data-variant="info" data-js-timer-session-count>0</span>
+                </div>
+                <ul class="timer-sessions__list" data-js-timer-sessions-list></ul>
+              </div>
+            </article>
+
+            <!-- Projects Card -->
+            <section class="card" data-js-projects-card style="max-width: 36rem;">
+
+              <header class="card__header">
+                <h2 class="card__title">Projets</h2>
+              </header>
+
+              <div class="card__body">
+                <!-- Toolbar -->
+                <div class="project-toolbar" role="toolbar" aria-label="Actions sur les projets">
+                  <button class="btn" data-variant="primary" type="button" data-js-btn-add-time disabled>
+                    <svg class="icon" aria-hidden="true"><use href="#icon-clock"></use></svg>
+                    <span class="btn__label">Ajouter du temps</span>
+                  </button>
+                  <button class="btn" data-variant="secondary" type="button" data-js-btn-add-project>
+                    <svg class="icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                    <span class="btn__label">Ajouter un projet</span>
+                  </button>
+                </div>
+
+                <!-- Project list (rendered by JS) -->
+                <ul class="project-list" data-js-project-list hidden></ul>
+
+                <!-- Empty state (shown when no projects) -->
+                <div class="empty-state" data-js-projects-empty>
+                  <svg class="empty-state__icon" aria-hidden="true"><use href="#icon-folder"></use></svg>
+                  <h3 class="empty-state__title">Aucun projet</h3>
+                  <p class="empty-state__description">
+                    Créez votre premier projet pour commencer le suivi.
+                  </p>
+                  <button class="btn" data-variant="primary" type="button" data-js-btn-add-project-empty>
+                    <svg class="icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                    <span class="btn__label">Créer un projet</span>
+                  </button>
+                </div>
+              </div>
+
+            </section><!-- /.card projects -->
 
           </div><!-- /.page__body -->
         </div><!-- /.page -->
@@ -236,50 +331,253 @@
 
     </div><!-- /.app-shell -->
 
-    <!-- Edit Time Dialog — shared for arrival and departure correction -->
+    <!-- Delete Confirmation Dialog -->
     <dialog
       class="modal"
-      id="edit-time-dialog"
-      data-js-edit-time-dialog
-      aria-labelledby="edit-time-dialog-title"
+      id="delete-punch-dialog"
+      data-js-delete-dialog
+      aria-labelledby="delete-dialog-title"
       aria-modal="true"
     >
       <div class="modal__header">
-        <h2 class="modal__title" id="edit-time-dialog-title">Modifier l'heure</h2>
+        <h2 class="modal__title" id="delete-dialog-title">Supprimer le pointage</h2>
         <button
           class="btn"
           data-variant="ghost"
           data-size="sm"
-          data-js-dialog-close
+          data-js-delete-dialog-close
           type="button"
           aria-label="Fermer"
         >
-          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <p data-js-delete-dialog-message>Êtes-vous sûr de vouloir supprimer ce pointage ?</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn" data-variant="secondary" data-js-delete-dialog-cancel type="button">
+          Annuler
+        </button>
+        <button class="btn" data-variant="danger" data-js-delete-dialog-confirm type="button">
+          Supprimer
+        </button>
+      </div>
+    </dialog>
+
+    <dialog
+      class="drawer"
+      data-js-project-history-drawer
+      aria-labelledby="project-history-title"
+    >
+      <div class="drawer__header">
+        <h2 class="drawer__title" id="project-history-title" data-js-project-history-title>Details : Projet</h2>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-project-history-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="drawer__body" data-js-project-history-content></div>
+      <div class="drawer__footer">
+        <button class="btn" data-variant="secondary" data-js-project-history-close type="button">Fermer</button>
+      </div>
+    </dialog>
+
+    <dialog
+      class="modal"
+      data-js-project-session-delete-dialog
+      aria-labelledby="project-session-delete-title"
+      aria-modal="true"
+    >
+      <div class="modal__header">
+        <h2 class="modal__title" id="project-session-delete-title">Supprimer la session</h2>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-project-session-delete-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <p data-js-project-session-delete-message>Supprimer la session ?</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn" data-variant="secondary" data-js-project-session-delete-cancel type="button">Annuler</button>
+        <button class="btn" data-variant="danger" data-js-project-session-delete-confirm type="button">Supprimer</button>
+      </div>
+    </dialog>
+
+    <!-- Add Time Dialog -->
+    <dialog
+      class="modal"
+      id="add-time-dialog"
+      data-js-add-time-dialog
+      aria-labelledby="add-time-dialog-title"
+      aria-modal="true"
+    >
+      <div class="modal__header">
+        <h2 class="modal__title" id="add-time-dialog-title">Ajouter du temps</h2>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-add-time-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <form class="add-time-form" id="add-time-form" data-js-add-time-form novalidate>
+          <div class="form-field">
+            <label class="form-field__label" for="add-time-project">Projet</label>
+            <div class="select-wrapper">
+              <select class="select" id="add-time-project" data-js-add-time-project required>
+                <option value="">Choisir un projet...</option>
+              </select>
+            </div>
+            <span class="form-field__error" id="add-time-project-error" data-js-add-time-project-error role="alert" hidden></span>
+          </div>
+
+          <div class="add-time-form__row">
+            <div class="form-field">
+              <label class="form-field__label" for="add-time-date">Date</label>
+              <input class="input" type="date" id="add-time-date" data-js-add-time-date required />
+              <span class="form-field__error" id="add-time-date-error" data-js-add-time-date-error role="alert" hidden></span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="add-time-start">Heure de début</label>
+              <input class="input" type="time" id="add-time-start" data-js-add-time-start required />
+              <span class="form-field__error" id="add-time-start-error" data-js-add-time-start-error role="alert" hidden></span>
+            </div>
+          </div>
+
+          <fieldset class="add-time-mode">
+            <legend class="form-field__label">Durée ou heure de fin</legend>
+            <label class="radio">
+              <input class="radio__input" type="radio" name="add-time-mode" value="duration" checked />
+              <span class="radio__label">Durée</span>
+            </label>
+            <label class="radio">
+              <input class="radio__input" type="radio" name="add-time-mode" value="end-time" />
+              <span class="radio__label">Heure de fin</span>
+            </label>
+          </fieldset>
+
+          <div class="form-field" data-js-add-time-duration-panel>
+            <label class="form-field__label" for="add-time-duration-hours">Durée</label>
+            <div class="input-group">
+              <input class="input add-time-form__duration-input" type="number" id="add-time-duration-hours" data-js-add-time-duration-hours min="0" max="23" inputmode="numeric" />
+              <span class="input-group__addon">h</span>
+              <input class="input add-time-form__duration-input" type="number" data-js-add-time-duration-minutes min="0" max="59" inputmode="numeric" />
+              <span class="input-group__addon">min</span>
+            </div>
+            <span class="form-field__error" id="add-time-duration-error" data-js-add-time-duration-error role="alert" hidden></span>
+          </div>
+
+          <div class="form-field" data-js-add-time-end-time-panel hidden>
+            <label class="form-field__label" for="add-time-end">Heure de fin</label>
+            <input class="input" type="time" id="add-time-end" data-js-add-time-end />
+            <span class="form-field__error" id="add-time-end-error" data-js-add-time-end-error role="alert" hidden></span>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn" data-variant="secondary" data-js-add-time-cancel type="button">
+          Annuler
+        </button>
+        <button class="btn" data-variant="primary" data-js-add-time-confirm type="submit" form="add-time-form" disabled>
+          Ajouter
+        </button>
+      </div>
+    </dialog>
+
+    <!-- Create Project Dialog -->
+    <dialog
+      class="modal"
+      id="create-project-dialog"
+      data-js-create-project-dialog
+      aria-labelledby="create-project-dialog-title"
+      aria-modal="true"
+    >
+      <div class="modal__header">
+        <h2 class="modal__title" id="create-project-dialog-title">Ajouter un projet</h2>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-create-project-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
         </button>
       </div>
       <div class="modal__body">
         <div class="form-field">
-          <label class="form-field__label" for="edit-time-input">Heure</label>
-          <input
-            class="input"
-            type="time"
-            id="edit-time-input"
-            data-js-time-input
-            required
-            step="60"
-          />
-          <p class="form-field__error" data-js-edit-error hidden role="alert"></p>
+          <label class="form-field__label" for="create-project-name">Nom du projet</label>
+          <input class="input" type="text" id="create-project-name" data-js-create-project-input
+                 placeholder="ex: Mon projet" required autocomplete="off" />
+          <span class="form-field__error" data-js-create-project-error role="alert" hidden></span>
         </div>
       </div>
       <div class="modal__footer">
-        <button class="btn" data-variant="secondary" data-js-dialog-cancel type="button">
+        <button class="btn" data-variant="secondary" data-js-create-project-cancel type="button">
           Annuler
         </button>
-        <button class="btn" data-variant="primary" data-js-dialog-confirm type="button">
-          Confirmer
+        <button class="btn" data-variant="primary" data-js-create-project-confirm type="button" disabled>
+          Ajouter
+        </button>
+      </div>
+    </dialog>
+
+    <!-- Rename Project Dialog -->
+    <dialog
+      class="modal"
+      id="rename-project-dialog"
+      data-js-rename-project-dialog
+      aria-labelledby="rename-project-dialog-title"
+      aria-modal="true"
+    >
+      <div class="modal__header">
+        <h2 class="modal__title" id="rename-project-dialog-title">Renommer le projet</h2>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-rename-project-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="form-field">
+          <label class="form-field__label" for="rename-project-name">Nouveau nom</label>
+          <input class="input" type="text" id="rename-project-name" data-js-rename-project-input
+                 required autocomplete="off" />
+          <span class="form-field__error" data-js-rename-project-error role="alert" hidden></span>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn" data-variant="secondary" data-js-rename-project-cancel type="button">
+          Annuler
+        </button>
+        <button class="btn" data-variant="primary" data-js-rename-project-confirm type="button" disabled>
+          Renommer
+        </button>
+      </div>
+    </dialog>
+
+    <!-- Delete Project Dialog -->
+    <dialog
+      class="modal"
+      id="delete-project-dialog"
+      data-js-delete-project-dialog
+      aria-labelledby="delete-project-dialog-title"
+      aria-modal="true"
+    >
+      <div class="modal__header">
+        <h2 class="modal__title" id="delete-project-dialog-title">Supprimer le projet</h2>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-delete-project-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="alert" data-variant="warning" role="alert">
+          <svg class="alert__icon" aria-hidden="true"><use href="#icon-warning"></use></svg>
+          <div class="alert__content">
+            <strong class="alert__title">Attention</strong>
+            <p class="alert__message" data-js-delete-project-message>
+              Le projet et toutes ses sessions seront définitivement supprimés.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn" data-variant="secondary" data-js-delete-project-cancel type="button">
+          Annuler
+        </button>
+        <button class="btn" data-variant="danger" data-js-delete-project-confirm type="button">
+          Supprimer
         </button>
       </div>
     </dialog>

@@ -1,0 +1,28 @@
+/* ============================================================
+   Punch Metrics — .punch-metrics
+   Displays time, percentage, and objective message
+   ============================================================ */
+
+.punch-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.punch-metrics__time {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-default);
+  line-height: var(--leading-tight);
+}
+
+.punch-metrics__progress {
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+}
+
+.punch-metrics__objective {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-success-text);
+}

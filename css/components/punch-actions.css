@@ -1,0 +1,53 @@
+/* ============================================================
+   Punch Actions — .punch-actions
+   Group of 4 punch buttons with vertical icon + label layout
+   ============================================================ */
+
+.punch-actions {
+  display: flex;
+  gap: var(--gap-sm);
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.punch-actions__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+
+  padding: var(--padding-sm);
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--leading-tight);
+  color: var(--color-text-default);
+  white-space: nowrap;
+
+  background-color: transparent;
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-default),
+    color var(--duration-fast) var(--ease-default);
+}
+
+.punch-actions__btn:hover {
+  background-color: var(--color-bg-subtle);
+}
+
+.punch-actions__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.punch-actions__btn .icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}

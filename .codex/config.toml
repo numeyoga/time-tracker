@@ -1,0 +1,6 @@
+[mcp_servers.backlog]
+command = "backlog"
+args = ["mcp", "start"]
+
+[mcp_servers.backlog.env]
+BACKLOG_CWD = "/var/home/nemo/Dev/windsurf-projects/time-tracker"

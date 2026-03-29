@@ -1,10 +1,10 @@
 ---
 id: TT-5
 title: Ajout manuel de temps sur un projet
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:55'
-updated_date: '2026-03-27 22:24'
+updated_date: '2026-03-29 13:11'
 labels:
   - code
   - design
@@ -21,7 +21,7 @@ documentation:
   - Covenant 05-etats-feedback.md §5.2 (Validation inline)
   - Covenant 06-iconographie.md (Lucide SVG sprite)
 priority: medium
-ordinal: 4000
+ordinal: 3000
 ---
 
 ## Description

@@ -1,0 +1,111 @@
+.project-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  margin-bottom: var(--space-4);
+}
+
+.add-time-form {
+  display: grid;
+  gap: var(--gap-md);
+}
+
+.add-time-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-md);
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: var(--padding-sm) var(--space-10) var(--padding-sm) var(--padding-md);
+  min-height: 2.25rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text-default);
+  background-color: var(--color-bg-default);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+  transition:
+    border-color var(--duration-fast) var(--ease-default),
+    box-shadow var(--duration-fast) var(--ease-default);
+}
+
+.select-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: var(--space-4);
+  width: var(--space-2);
+  height: var(--space-2);
+  border-right: var(--border-width-default) solid var(--color-text-muted);
+  border-bottom: var(--border-width-default) solid var(--color-text-muted);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+.select:hover {
+  border-color: var(--color-border-strong);
+}
+
+.select:focus-visible {
+  border-color: var(--color-border-focus);
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: -1px;
+}
+
+.select[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+
+.add-time-mode {
+  display: grid;
+  gap: var(--gap-sm);
+  padding: 0;
+  border: 0;
+}
+
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  min-height: 1.5rem;
+  color: var(--color-text-default);
+}
+
+.radio__input {
+  accent-color: var(--color-primary);
+}
+
+.input-group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
+  gap: var(--gap-xs);
+  align-items: center;
+}
+
+.input-group__addon {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.add-time-form__duration-input {
+  min-width: 0;
+}
+
+@media (max-width: 720px) {
+  .add-time-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .project-toolbar {
+    flex-direction: column;
+  }
+}

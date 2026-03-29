@@ -1,10 +1,10 @@
 ---
 id: TT-2
 title: Card Pointage quotidien
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:55'
-updated_date: '2026-03-27 22:11'
+updated_date: '2026-03-28 22:11'
 labels:
   - code
   - design
@@ -164,19 +164,47 @@ Card principale de la page d'accueil affichant le statut de la journée de trava
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Conteneur principal : `<article class="card">` avec `.card__header` (badge + métriques + boutons) et `.card__body` (liste dépliable)
-- [ ] #2 Badge statut (`.badge`) avec variant Covenant : `neutral` (Non commencée), `info` (En cours), `warning` (En pause), `success` (Journée terminée)
-- [ ] #3 4 boutons de pointage `.btn[data-variant="ghost"]` avec icônes Lucide (`log-in`, `pause`, `play`, `log-out`) + label texte sous l'icône, `aria-label` descriptif
-- [ ] #4 Machine d'états : seuls les boutons valides pour l'état courant sont actifs (`:disabled` sur les autres), transitions NON_COMMENCEE → EN_COURS → EN_PAUSE ↔ EN_COURS → TERMINEE
-- [ ] #5 Métriques affichées dans `.punch-metrics` : temps de présence (Xh Xm), pourcentage /8h, message 'Objectif atteint!' si ≥ 100%
-- [ ] #6 Temps de présence calculé automatiquement (soustrait les pauses du temps entre arrivée et départ)
-- [ ] #7 Section dépliable via `<details>/<summary>` natif — titre 'Pointages d'aujourd'hui'
-- [ ] #8 Liste `.punch-list` : chaque `.punch-list__item` affiche icône Lucide colorée (`data-color`), label, heure
-- [ ] #9 Chaque pointage est modifiable (`.btn[data-variant="ghost"][data-size="sm"]` avec `icon-pencil`, `aria-label="Modifier l'heure de [type]"`) et supprimable (`icon-trash`, `aria-label="Supprimer le pointage [type]"`)
-- [ ] #10 Modification d'un pointage : inline via `<input type="time">` dans la ligne, validation cohérence chronologique (arrivée < pause < reprise < départ)
-- [ ] #11 Suppression d'un pointage : confirmation modale (`<dialog>` natif), recalcul machine d'états et métriques
-- [ ] #12 Persistance dans localStorage : clé structurée par date, format JSON avec type et timestamp par pointage
-- [ ] #13 Tous les tokens CSS Covenant : couleurs, espacements, radius, ombres, durées — aucune valeur brute
-- [ ] #14 Sélecteurs JS via `data-js-*` exclusivement (ex: `data-js-punch-btn`, `data-js-punch-list`)
-- [ ] #15 Focus visible sur tous les éléments interactifs, cibles ≥ 24×24 CSS px, contrastes WCAG 2.2 AA
+- [x] #1 Conteneur principal : `<article class="card">` avec `.card__header` (badge + métriques + boutons) et `.card__body` (liste dépliable)
+- [x] #2 Badge statut (`.badge`) avec variant Covenant : `neutral` (Non commencée), `info` (En cours), `warning` (En pause), `success` (Journée terminée)
+- [x] #3 4 boutons de pointage `.btn[data-variant="ghost"]` avec icônes Lucide (`log-in`, `pause`, `play`, `log-out`) + label texte sous l'icône, `aria-label` descriptif
+- [x] #4 Machine d'états : seuls les boutons valides pour l'état courant sont actifs (`:disabled` sur les autres), transitions NON_COMMENCEE → EN_COURS → EN_PAUSE ↔ EN_COURS → TERMINEE
+- [x] #5 Métriques affichées dans `.punch-metrics` : temps de présence (Xh Xm), pourcentage /8h, message 'Objectif atteint!' si ≥ 100%
+- [x] #6 Temps de présence calculé automatiquement (soustrait les pauses du temps entre arrivée et départ)
+- [x] #7 Section dépliable via `<details>/<summary>` natif — titre 'Pointages d'aujourd'hui'
+- [x] #8 Liste `.punch-list` : chaque `.punch-list__item` affiche icône Lucide colorée (`data-color`), label, heure
+- [x] #9 Chaque pointage est modifiable (`.btn[data-variant="ghost"][data-size="sm"]` avec `icon-pencil`, `aria-label="Modifier l'heure de [type]"`) et supprimable (`icon-trash`, `aria-label="Supprimer le pointage [type]"`)
+- [x] #10 Modification d'un pointage : inline via `<input type="time">` dans la ligne, validation cohérence chronologique (arrivée < pause < reprise < départ)
+- [x] #11 Suppression d'un pointage : confirmation modale (`<dialog>` natif), recalcul machine d'états et métriques
+- [x] #12 Persistance dans localStorage : clé structurée par date, format JSON avec type et timestamp par pointage
+- [x] #13 Tous les tokens CSS Covenant : couleurs, espacements, radius, ombres, durées — aucune valeur brute
+- [x] #14 Sélecteurs JS via `data-js-*` exclusivement (ex: `data-js-punch-btn`, `data-js-punch-list`)
+- [x] #15 Focus visible sur tous les éléments interactifs, cibles ≥ 24×24 CSS px, contrastes WCAG 2.2 AA
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+## Résumé
+
+Refonte complète de la card de pointage quotidien selon le mockup TT-2.
+
+### Fichiers créés
+- `icons/sprite.svg` — Lucide SVG sprite (log-in, log-out, pause, play, pencil, trash, x)
+- `css/components/badge.css` — Badge statut (neutral/info/warning/success)
+- `css/components/icon.css` — Icônes avec tailles et couleurs sémantiques
+- `css/components/punch-metrics.css` — Métriques temps/pourcentage/objectif
+- `css/components/punch-actions.css` — 4 boutons verticaux icône + label
+- `css/components/punch-list.css` — Liste des pointages avec CRUD inline
+
+### Fichiers modifiés
+- `index.html` — Nouvelle structure card (badge + metrics + actions + details/punch-list + delete dialog)
+- `js/components/punch-clock.js` — Rendering badge, métriques (%/8h), punch list, delete dialog
+- `js/pages/today.js` — Inline time editing, suppression avec confirmation, validation chronologique
+- `tests/e2e/punch-clock.spec.js` — Tests badge, métriques, nouveaux sélecteurs
+- `tests/e2e/break-flow.spec.js` — Tests pause/reprise avec nouvelle UI
+- `tests/e2e/edit-time.spec.js` — Tests inline edit + suppression avec dialog
+
+### Tests
+- 68 tests unitaires ✓
+- 20 tests e2e ✓
+<!-- SECTION:FINAL_SUMMARY:END -->

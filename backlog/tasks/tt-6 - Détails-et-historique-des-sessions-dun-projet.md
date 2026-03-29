@@ -1,10 +1,10 @@
 ---
 id: TT-6
 title: Détails et historique des sessions d'un projet
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:55'
-updated_date: '2026-03-27 22:28'
+updated_date: '2026-03-29 14:20'
 labels:
   - code
   - design
@@ -16,7 +16,7 @@ references:
   - Covenant 03-composants.md §10 (Badge)
   - Covenant 05-etats-feedback.md §6 (Empty state)
 priority: medium
-ordinal: 5000
+ordinal: 4000
 ---
 
 ## Description
