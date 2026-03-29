@@ -1,7 +1,6 @@
 import { getEntryByDate, getTodayEntry } from '../storage/entries.js';
 import { getAllProjects } from '../storage/projects.js';
 import { getActiveSessions, getAllSessions } from '../storage/sessions.js';
-import { showToast } from './toast.js';
 
 const PROJECT_COLORS = [
   'var(--timeline-color-1)',
@@ -26,11 +25,6 @@ const formatDuration = (ms) => {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
   return `${hours}h${minutes.toString().padStart(2, '0')}`;
-};
-
-const formatDateForClipboard = (isoDate) => {
-  const [year, month, day] = isoDate.split('-');
-  return `${day}/${month}/${year}`;
 };
 
 const getProjectSessionsForDate = (isoDate, now = Date.now()) =>
@@ -178,14 +172,6 @@ const createEmptyState = (message = 'Pointez votre arrivée pour voir la répart
   return empty;
 };
 
-const buildClipboardText = (timeline) => {
-  const lines = [
-    `Répartition du ${formatDateForClipboard(timeline.date)} (${formatClock(timeline.startMs)} – ${formatClock(timeline.endMs)})`,
-    ...timeline.segments.map((segment) => `- ${formatClock(segment.startMs)}–${formatClock(segment.endMs)} ${segment.label} (${formatDuration(segment.endMs - segment.startMs)})`),
-  ];
-  return lines.join('\n');
-};
-
 const createLegendItem = (label, color) => {
   const item = document.createElement('span');
   item.className = 'timeline__legend-item';
@@ -242,16 +228,28 @@ export const renderTimelineData = (root, timeline, { emptyMessage = 'Pointez vot
 
   legend.replaceChildren(...Array.from(legendMap.entries()).map(([label, color]) => createLegendItem(label, color)));
 
-  const tooltip = document.createElement('div');
-  tooltip.className = 'tooltip';
-  tooltip.hidden = true;
-  tooltip.dataset.jsTimelineTooltip = '';
+  let tooltip = document.querySelector('[data-js-timeline-tooltip]');
+  if (!tooltip) {
+    tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+    tooltip.hidden = true;
+    tooltip.dataset.jsTimelineTooltip = '';
+    document.body.appendChild(tooltip);
+  }
 
   const showTooltip = (event) => {
     const segment = event.target.closest('.timeline__segment');
     if (!segment) return;
     tooltip.textContent = segment.dataset.tooltip;
+    const rect = segment.getBoundingClientRect();
     tooltip.hidden = false;
+    const tRect = tooltip.getBoundingClientRect();
+    let top = rect.top - tRect.height - 8;
+    if (top < 8) top = rect.bottom + 8;
+    let left = rect.left + (rect.width - tRect.width) / 2;
+    left = Math.max(8, Math.min(left, globalThis.innerWidth - tRect.width - 8));
+    tooltip.style.top = `${top}px`;
+    tooltip.style.left = `${left}px`;
   };
 
   const hideTooltip = () => {
@@ -263,8 +261,7 @@ export const renderTimelineData = (root, timeline, { emptyMessage = 'Pointez vot
   bar.addEventListener('mouseout', hideTooltip);
   bar.addEventListener('focusout', hideTooltip);
 
-  root.append(bar, markers, legend, tooltip);
-  root.dataset.clipboardText = buildClipboardText(timeline);
+  root.append(bar, markers, legend);
 };
 
 export const renderTimelineOverview = (root) => {
@@ -276,27 +273,17 @@ export const renderTimelineOverview = (root) => {
 export const initTimelineOverview = (cardRoot) => {
   if (!cardRoot) return () => {};
   const content = cardRoot.querySelector('[data-js-timeline-content]');
-  const copyButton = cardRoot.querySelector('[data-js-timeline-copy]');
-  if (!content || !copyButton) return () => {};
+  if (!content) return () => {};
 
   const render = () => renderTimelineOverview(content);
   render();
 
-  const onCopy = async () => {
-    if (!content.dataset.clipboardText) return;
-    await navigator.clipboard.writeText(content.dataset.clipboardText);
-    showToast({ message: 'Répartition copiée.', variant: 'success' });
-  };
-
-  copyButton.addEventListener('click', onCopy);
-
-  const intervalId = window.setInterval(() => {
+  const intervalId = globalThis.setInterval(() => {
     if (getActiveSessions().length === 0 && getTodayEntry()?.departedAt != null) return;
     render();
   }, 60_000);
 
   return () => {
-    copyButton.removeEventListener('click', onCopy);
-    window.clearInterval(intervalId);
+    globalThis.clearInterval(intervalId);
   };
 };

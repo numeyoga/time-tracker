@@ -14,7 +14,6 @@
 
     <!-- Composants -->
     <link rel="stylesheet" href="css/components/topbar.css" />
-    <link rel="stylesheet" href="css/components/sidenav.css" />
     <link rel="stylesheet" href="css/components/button.css" />
     <link rel="stylesheet" href="css/components/card.css" />
     <link rel="stylesheet" href="css/components/badge.css" />
@@ -212,22 +211,6 @@
         </div>
       </header>
 
-      <!-- Side Nav -->
-      <nav class="app-shell__sidenav" aria-label="Navigation principale">
-        <div class="sidenav" data-js-sidenav>
-          <ul class="sidenav__list">
-            <li>
-              <a class="sidenav__item" href="/time-tracker" aria-current="page" data-js-sidenav-item>
-                <svg class="sidenav__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-                <span class="sidenav__label">Aujourd'hui</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
 
       <!-- Main content -->
       <main class="app-shell__main" id="main-content">
@@ -257,9 +240,9 @@
             <article class="card" data-js-punch-clock>
 
               <header class="card__header">
-                <div>
-                  <span class="badge" data-variant="neutral" data-js-punch-badge>Non commencée</span>
+                <div class="flex items-center gap-sm">
                   <h2 class="card__title">Pointage</h2>
+                  <span class="badge" data-variant="neutral" data-js-punch-badge>Non commencée</span>
                 </div>
 
                 <div class="punch-metrics" data-js-punch-metrics>
@@ -413,10 +396,6 @@
             <article class="card" data-js-timeline-card>
               <div class="card__header">
                 <h2 class="card__title">Répartition de la journée</h2>
-                <button class="btn" data-variant="ghost" data-size="sm" type="button" data-js-timeline-copy aria-label="Copier la répartition">
-                  <svg class="icon" aria-hidden="true"><use href="#icon-clipboard"></use></svg>
-                  <span class="btn__label">Copier</span>
-                </button>
               </div>
               <div class="card__body">
                 <div class="timeline" data-js-timeline-content></div>

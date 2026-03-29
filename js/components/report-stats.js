@@ -168,7 +168,9 @@ const renderTable = (report) => {
   const bodyRows = report.rows.map((row) => `
     <tr class="data-table__row">
       <td class="data-table__td">${row.project.name}</td>
-      ${row.values.map((value) => `<td class="data-table__td">${value > 0 ? formatDurationLong(value) : '–'}</td>`).join('')}
+      ${row.values.map((value, index) => value > 0
+    ? `<td class="data-table__td"><button class="report-table__day-link" type="button" data-js-report-day-sessions="${report.days[index].iso}">${formatDurationLong(value)}</button></td>`
+    : `<td class="data-table__td">–</td>`).join('')}
       <td class="data-table__td data-table__td--total">${formatDurationLong(row.total)}</td>
     </tr>
   `).join('');
@@ -187,7 +189,9 @@ const renderTable = (report) => {
         <tfoot class="data-table__foot">
           <tr class="data-table__row">
             <td class="data-table__td"><strong>Projets</strong></td>
-            ${report.footerProjects.map((value) => `<td class="data-table__td">${value > 0 ? formatDurationLong(value) : '–'}</td>`).join('')}
+            ${report.footerProjects.map((value, index) => value > 0
+    ? `<td class="data-table__td"><button class="report-table__day-link" type="button" data-js-report-day-sessions="${report.days[index].iso}"><strong>${formatDurationLong(value)}</strong></button></td>`
+    : `<td class="data-table__td">–</td>`).join('')}
             <td class="data-table__td data-table__td--total"><strong>${formatDurationLong(report.totalProjects)}</strong></td>
           </tr>
           <tr class="data-table__row">
@@ -282,6 +286,12 @@ export const initReportStats = (root, { onManageEntries = () => {} } = {}) => {
     const dayButton = event.target.closest('[data-js-report-day-chart]');
     if (dayButton) {
       await openDayTimelineDrawer(dayButton.dataset.jsReportDayChart);
+      return;
+    }
+
+    const daySessionsButton = event.target.closest('[data-js-report-day-sessions]');
+    if (daySessionsButton) {
+      await openDayTimelineDrawer(daySessionsButton.dataset.jsReportDaySessions);
       return;
     }
 

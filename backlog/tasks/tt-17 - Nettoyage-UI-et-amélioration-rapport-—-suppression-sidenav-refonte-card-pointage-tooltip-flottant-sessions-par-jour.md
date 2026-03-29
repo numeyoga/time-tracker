@@ -3,9 +3,10 @@ id: TT-17
 title: >-
   Nettoyage UI et amélioration rapport — suppression sidenav, refonte card
   pointage, tooltip flottant, sessions par jour
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-29 21:59'
+updated_date: '2026-03-29 22:11'
 labels:
   - code
   - design
@@ -87,9 +88,40 @@ Le bouton `[data-js-timeline-copy]` (`index.html` l.416-419) et la logique assoc
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Le sidenav est supprimé de l'HTML, du CSS et du layout — le main occupe toute la largeur
-- [ ] #2 Le bouton 'Copier la répartition' et toute la logique clipboard associée sont supprimés
-- [ ] #3 Le titre 'Pointage' est correctement positionné dans le card de pointage (cohérent avec le design system Covenant)
-- [ ] #4 Le tooltip de répartition s'affiche en overlay flottant sans décaler le layout ni être coupé
-- [ ] #5 Cliquer sur un total journalier dans le tableau du rapport ouvre un drawer affichant les sessions du jour avec possibilité de modification
+- [x] #1 Le sidenav est supprimé de l'HTML, du CSS et du layout — le main occupe toute la largeur
+- [x] #2 Le bouton 'Copier la répartition' et toute la logique clipboard associée sont supprimés
+- [x] #3 Le titre 'Pointage' est correctement positionné dans le card de pointage (cohérent avec le design system Covenant)
+- [x] #4 Le tooltip de répartition s'affiche en overlay flottant sans décaler le layout ni être coupé
+- [x] #5 Cliquer sur un total journalier dans le tableau du rapport ouvre un drawer affichant les sessions du jour avec possibilité de modification
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+## Implémentation complète
+
+### #1 — Sidenav supprimé
+- Bloc `<nav class="app-shell__sidenav">` retiré de `index.html`
+- `<link>` vers `css/components/sidenav.css` retiré de `index.html`
+- `css/layout.css` : grid-template simplifié à 1 colonne `1fr`, `grid-template-areas` sans `sidenav`, règles responsive obsolètes supprimées, `.app-shell__sidenav` retiré
+
+### #2 — Bouton "Copier la répartition" supprimé
+- `<button data-js-timeline-copy>` retiré de `index.html`
+- `buildClipboardText()` et `formatDateForClipboard()` supprimés de `timeline-overview.js`
+- `root.dataset.clipboardText` supprimé
+- Import `showToast` inutilisé retiré
+- `initTimelineOverview` : logique `copyButton` et `onCopy` supprimées
+
+### #3 — Titre "Pointage" repositionné
+- Structure du `card__header` : titre `h2` en premier, badge `Non commencée` inline à côté via `class="flex items-center gap-sm"`
+
+### #4 — Tooltip flottant (overlay)
+- Singleton `[data-js-timeline-tooltip]` attaché au `document.body`
+- Positionnement via `getBoundingClientRect()` : au-dessus du segment par défaut, en-dessous si hors écran
+- CSS : `position: fixed; z-index: var(--z-tooltip); pointer-events: none`
+
+### #5 — Clic total journalier → drawer sessions
+- `report-stats.js` : cellules avec valeur > 0 dans les lignes projet et footer "Projets" rendues comme `<button class="report-table__day-link" data-js-report-day-sessions="{iso}">`
+- Gestionnaire `click` : détecte `[data-js-report-day-sessions]` et appelle `openDayTimelineDrawer(iso)`
+- CSS `.report-table__day-link` : bouton transparent stylé comme lien primaire soulignée
+<!-- SECTION:FINAL_SUMMARY:END -->
