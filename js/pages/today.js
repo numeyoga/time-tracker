@@ -34,6 +34,14 @@ import {
   renderTimerCard,
   startTimerLiveCounter,
 } from '../components/timer-card.js';
+import {
+  renderProjectTimeOverview,
+  startProjectTimeOverviewRefresh,
+} from '../components/project-time-overview.js';
+import { initTimelineOverview, renderTimelineOverview } from '../components/timeline-overview.js';
+import { initReportStats } from '../components/report-stats.js';
+import { openEntryManagementDrawer } from '../components/entry-management-drawer.js';
+import { initDataTransfer } from '../components/data-transfer.js';
 
 // ============================================================
 // Inline time editing
@@ -262,12 +270,34 @@ export const initTodayPage = () => {
   // ---- Timer & Projects ----
   const projectsCard = pageRoot.querySelector('[data-js-projects-card]');
   const timerRoot = pageRoot.querySelector('[data-js-timer-card]');
+  const projectTimeRoot = pageRoot.querySelector('[data-js-project-time-content]');
+  const timelineRoot = pageRoot.querySelector('[data-js-timeline-content]');
+  const reportRoot = pageRoot.querySelector('[data-js-report-stats]');
+  const openGlobalEntryManager = (filter = null) => openEntryManagementDrawer({
+    filter,
+    onChange: refreshAll,
+  });
+  const reportStats = initReportStats(reportRoot, {
+    onManageEntries: ({ mode, anchorDate }) => openGlobalEntryManager({
+      mode,
+      anchorDate: new Date(anchorDate),
+    }),
+  });
   const refreshAll = () => {
     if (timerRoot) renderTimerCard(timerRoot);
     if (projectsCard) renderProjectList(projectsCard);
+    if (projectTimeRoot) renderProjectTimeOverview(projectTimeRoot);
+    if (timelineRoot) renderTimelineOverview(timelineRoot);
+    reportStats.refresh();
   };
+  refreshAll();
+  pageRoot.querySelector('[data-js-entry-manage-global]')
+    ?.addEventListener('click', () => openGlobalEntryManager());
   initTimer(pageRoot, timerRoot, refreshAll);
   initProjects(pageRoot, projectsCard, timerRoot, refreshAll);
+  startProjectTimeOverviewRefresh(projectTimeRoot);
+  initTimelineOverview(pageRoot.querySelector('[data-js-timeline-card]'));
+  initDataTransfer();
 };
 
 // ============================================================

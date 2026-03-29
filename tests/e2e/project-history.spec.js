@@ -53,10 +53,11 @@ test.describe('Historique projet', () => {
     await drawer.locator('[data-js-project-session-edit]').click();
 
     await drawer.locator('[data-js-project-session-end]').fill('08:30');
-    await drawer.locator('[data-js-project-session-save]').click();
+    await expect(drawer.locator('[data-js-project-session-save]')).toBeDisabled();
     await expect(drawer.locator('[data-js-project-session-error]')).toContainText('La fin doit être après le début');
 
     await drawer.locator('[data-js-project-session-end]').fill('11:00');
+    await expect(drawer.locator('[data-js-project-session-save]')).toBeEnabled();
     await drawer.locator('[data-js-project-session-save]').click();
 
     await expect(drawer.locator('.data-table__td')).toContainText(['1', '09:00', '11:00', '2h00', 'Terminee']);

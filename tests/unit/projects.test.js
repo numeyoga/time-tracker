@@ -82,7 +82,7 @@ describe('createProject', () => {
 
   it('throws on empty name', () => {
     expect(() => createProject('')).toThrow('vide');
-    expect(() => createProject('   ')).toThrow('vide');
+    expect(() => createProject('   ')).toThrow('espaces');
   });
 
   it('throws on duplicate name (case-insensitive)', () => {
@@ -165,7 +165,7 @@ describe('deleteProject', () => {
 describe('validateProjectName', () => {
   it('returns error for empty name', () => {
     expect(validateProjectName('')).toContain('vide');
-    expect(validateProjectName('   ')).toContain('vide');
+    expect(validateProjectName('   ')).toContain('espaces');
   });
 
   it('returns error for duplicate name', () => {

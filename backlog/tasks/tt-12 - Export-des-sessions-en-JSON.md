@@ -1,10 +1,10 @@
 ---
 id: TT-12
 title: Export des sessions en JSON
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:56'
-updated_date: '2026-03-28 21:36'
+updated_date: '2026-03-29 19:41'
 labels:
   - code
   - design

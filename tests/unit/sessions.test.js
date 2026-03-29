@@ -105,7 +105,7 @@ describe('createManualSession', () => {
       projectId: 'proj_1',
       startedAt: '2026-03-29T09:00:00.000Z',
       endedAt: '2026-03-29T08:00:00.000Z',
-    })).toThrow('invalide');
+    })).toThrow('après le début');
   });
 });
 

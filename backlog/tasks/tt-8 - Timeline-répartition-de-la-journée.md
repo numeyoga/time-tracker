@@ -1,10 +1,10 @@
 ---
 id: TT-8
 title: Timeline répartition de la journée
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:55'
-updated_date: '2026-03-27 22:34'
+updated_date: '2026-03-29 14:40'
 labels:
   - code
   - design
@@ -17,7 +17,7 @@ references:
   - Covenant 04-patterns.md §8 (Toast)
   - Covenant 05-etats-feedback.md §6 (Empty state)
 priority: medium
-ordinal: 7000
+ordinal: 6000
 ---
 
 ## Description

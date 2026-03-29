@@ -1,10 +1,10 @@
 ---
 id: TT-10
 title: Popover timeline quotidienne
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:56'
-updated_date: '2026-03-28 21:34'
+updated_date: '2026-03-29 15:05'
 labels:
   - code
   - design
@@ -15,7 +15,7 @@ references:
   - Covenant 04-patterns.md §7 (Drawer)
   - Covenant 05-etats-feedback.md §6 (Empty state)
 priority: low
-ordinal: 9000
+ordinal: 8000
 ---
 
 ## Description

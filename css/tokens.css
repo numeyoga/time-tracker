@@ -166,6 +166,19 @@
   --z-tooltip:  700;
 
   /* ===========================================================================
+     TIMELINE — Project colors
+     =========================================================================== */
+
+  --timeline-color-1: var(--palette-primary-500);
+  --timeline-color-2: var(--palette-info-500);
+  --timeline-color-3: var(--palette-success-500);
+  --timeline-color-4: var(--palette-warning-500);
+  --timeline-color-5: var(--palette-danger-500);
+  --timeline-color-6: var(--palette-primary-700);
+  --timeline-color-7: var(--palette-info-700);
+  --timeline-color-8: var(--palette-success-700);
+
+  /* ===========================================================================
      TRANSITIONS ET ANIMATIONS
      =========================================================================== */
 
@@ -187,7 +200,7 @@
   --shell-topbar-height:       3rem;      /* 48px */
   --shell-nav-width:           16rem;     /* 256px — expanded */
   --shell-nav-width-collapsed: 3.5rem;    /* 56px — collapsed */
-  --shell-statusbar-height:    0px;
+  --shell-statusbar-height:    2.5rem;
   --shell-main-padding:        var(--padding-lg);
 
   /* ===========================================================================

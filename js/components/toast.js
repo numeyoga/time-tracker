@@ -63,6 +63,8 @@ const removeToast = (toast) => {
   toast.addEventListener('transitionend', () => toast.remove(), { once: true });
 };
 
+const QUEUED_TOAST_KEY = 'tt_queued_toast';
+
 /**
  * Displays a toast notification.
  * @param {object} opts
@@ -98,4 +100,20 @@ export const showToast = ({ message, variant = 'info', duration = 5000 }) => {
   container.appendChild(toast);
 
   if (duration > 0) setTimeout(() => removeToast(toast), duration);
+};
+
+export const queueToastForReload = (payload) => {
+  sessionStorage.setItem(QUEUED_TOAST_KEY, JSON.stringify(payload));
+};
+
+export const consumeQueuedToast = () => {
+  const raw = sessionStorage.getItem(QUEUED_TOAST_KEY);
+  if (!raw) return;
+  sessionStorage.removeItem(QUEUED_TOAST_KEY);
+
+  try {
+    showToast(JSON.parse(raw));
+  } catch {
+    // Ignore malformed queued toasts
+  }
 };

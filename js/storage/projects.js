@@ -1,3 +1,5 @@
+import { validateUniqueName } from '../utils/validation.js';
+
 const STORAGE_KEY = 'time-tracker-projects';
 
 /**
@@ -37,14 +39,10 @@ export const getProjectById = (id) =>
  * @throws {Error} if name is empty or duplicate
  */
 export const createProject = (name) => {
-  const trimmed = name.trim();
-  if (!trimmed) throw new Error('Le nom du projet ne peut pas être vide.');
-
   const projects = getAllProjects();
-  const duplicate = projects.some(
-    (p) => p.name.toLowerCase() === trimmed.toLowerCase()
-  );
-  if (duplicate) throw new Error('Un projet avec ce nom existe déjà.');
+  const validation = validateUniqueName(name, projects);
+  if (!validation.valid) throw new Error(validation.error);
+  const trimmed = name.trim();
 
   const project = {
     id: `proj_${crypto.randomUUID()}`,
@@ -64,17 +62,13 @@ export const createProject = (name) => {
  * @throws {Error} if name is empty, duplicate, or project not found
  */
 export const renameProject = (id, newName) => {
-  const trimmed = newName.trim();
-  if (!trimmed) throw new Error('Le nom du projet ne peut pas être vide.');
-
   const projects = getAllProjects();
   const idx = projects.findIndex((p) => p.id === id);
   if (idx === -1) throw new Error('Projet introuvable.');
 
-  const duplicate = projects.some(
-    (p) => p.id !== id && p.name.toLowerCase() === trimmed.toLowerCase()
-  );
-  if (duplicate) throw new Error('Un projet avec ce nom existe déjà.');
+  const validation = validateUniqueName(newName, projects, { excludeId: id });
+  if (!validation.valid) throw new Error(validation.error);
+  const trimmed = newName.trim();
 
   const updated = { ...projects[idx], name: trimmed };
   const newProjects = [...projects];
@@ -104,15 +98,6 @@ export const deleteProject = (id) => {
  * @returns {string|null}
  */
 export const validateProjectName = (name, excludeId = null) => {
-  const trimmed = name.trim();
-  if (!trimmed) return 'Le nom du projet ne peut pas être vide.';
-
-  const projects = getAllProjects();
-  const duplicate = projects.some(
-    (p) => (excludeId == null || p.id !== excludeId) &&
-           p.name.toLowerCase() === trimmed.toLowerCase()
-  );
-  if (duplicate) return 'Un projet avec ce nom existe déjà.';
-
-  return null;
+  const validation = validateUniqueName(name, getAllProjects(), { excludeId });
+  return validation.valid ? null : validation.error;
 };

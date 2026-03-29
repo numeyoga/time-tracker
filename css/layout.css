@@ -39,6 +39,19 @@
 
 .app-shell__status {
   grid-area: status;
+  display: flex;
+  align-items: center;
+  padding-inline: var(--shell-main-padding);
+  background-color: var(--color-bg-default);
+  border-top: var(--border-width-default) solid var(--color-border-subtle);
+}
+
+.statusbar {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background:
+    linear-gradient(90deg, var(--color-bg-subtle), color-mix(in srgb, var(--color-primary-subtle) 50%, var(--color-bg-default)));
 }
 
 /* Side Nav rétractable */

@@ -1,6 +1,7 @@
 import { getProjectById } from '../storage/projects.js';
 import { deleteSession, getSessionsForProject, updateSession } from '../storage/sessions.js';
 import { formatDuration } from '../utils/time.js';
+import { validateDateRange, validateRequired } from '../utils/validation.js';
 
 const createSvgIcon = (href) => {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -41,13 +42,22 @@ const toDateTime = (isoString, timeValue) => {
 };
 
 const getValidationError = (session, startValue, endValue) => {
-  if (!startValue) return 'Heure de début requise';
-  if (session.endedAt != null && !endValue) return 'Heure de fin requise';
+  const startValidation = validateRequired(startValue, 'Heure de début requise');
+  if (!startValidation.valid) return startValidation.error;
+  if (session.endedAt != null) {
+    const endValidation = validateRequired(endValue, 'Heure de fin requise');
+    if (!endValidation.valid) return endValidation.error;
+  }
   if (session.endedAt != null) {
     const startedAt = toDateTime(session.startedAt, startValue);
     const endedAt = toDateTime(session.startedAt, endValue);
-    if (endedAt.getTime() <= startedAt.getTime()) {
-      return 'La fin doit être après le début';
+    const rangeValidation = validateDateRange(startedAt, endedAt, {
+      startRequiredMessage: 'Heure de début requise',
+      endRequiredMessage: 'Heure de fin requise',
+      orderMessage: 'La fin doit être après le début',
+    });
+    if (!rangeValidation.valid) {
+      return rangeValidation.error;
     }
   }
   return '';
@@ -169,7 +179,9 @@ const createEditingRow = (session, index) => {
 
   const actionsCell = document.createElement('td');
   actionsCell.className = 'data-table__td data-table__td--actions';
-  actionsCell.appendChild(createIconButton(`Enregistrer la session ${index + 1}`, '#icon-save', 'jsProjectSessionSave', 'primary'));
+  const saveButton = createIconButton(`Enregistrer la session ${index + 1}`, '#icon-save', 'jsProjectSessionSave', 'primary');
+  saveButton.disabled = Boolean(getValidationError(session, startInput.value, endInput.value));
+  actionsCell.appendChild(saveButton);
   actionsCell.appendChild(createIconButton(`Annuler la modification de la session ${index + 1}`, '#icon-x', 'jsProjectSessionCancel'));
   row.appendChild(actionsCell);
 
@@ -295,9 +307,13 @@ export const openProjectHistoryDrawer = ({ projectId, onChange }) => {
       const startInput = row.querySelector('[data-js-project-session-start]');
       const endInput = row.querySelector('[data-js-project-session-end]');
       const error = row.querySelector('[data-js-project-session-error]');
+      const saveButton = row.querySelector('[data-js-project-session-save]');
       const message = getValidationError(session, startInput.value, endInput.value);
       error.textContent = message;
       error.hidden = !message;
+      startInput.toggleAttribute('aria-invalid', Boolean(message));
+      if (endInput) endInput.toggleAttribute('aria-invalid', Boolean(message));
+      if (saveButton) saveButton.disabled = Boolean(message);
     };
 
     const onDialogClick = async (event) => {

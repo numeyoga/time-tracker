@@ -1,10 +1,10 @@
 ---
 id: TT-9
 title: Rapports et Statistiques hebdomadaires/mensuels
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:56'
-updated_date: '2026-03-28 21:34'
+updated_date: '2026-03-29 15:05'
 labels:
   - code
   - design
@@ -17,7 +17,7 @@ references:
   - Covenant 03-composants.md §11 (Tabs)
   - Covenant 05-etats-feedback.md §6 (Empty state)
 priority: medium
-ordinal: 8000
+ordinal: 7000
 ---
 
 ## Description

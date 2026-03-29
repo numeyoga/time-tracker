@@ -1,0 +1,48 @@
+.day-timeline-drawer__body {
+  display: grid;
+  gap: var(--gap-md);
+}
+
+.day-timeline-drawer__subtitle {
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.event-list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+}
+
+.event-list__indicator {
+  inline-size: var(--space-1);
+  align-self: stretch;
+  border-radius: var(--radius-full);
+}
+
+.event-list__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xs);
+}
+
+.event-list__time {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+}
+
+.event-list__label {
+  color: var(--color-text-default);
+}
+
+.event-list__duration {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}

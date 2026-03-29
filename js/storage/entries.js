@@ -24,6 +24,13 @@ const saveAllEntries = (entries) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
 };
 
+const sortEntries = (entries) => [...entries].sort((a, b) => b.date.localeCompare(a.date));
+
+const isEntryEmpty = (entry) =>
+  entry?.arrivedAt == null &&
+  entry?.departedAt == null &&
+  (!entry?.breaks || entry.breaks.length === 0);
+
 /**
  * Returns today's entry or null if none exists.
  * @returns {object|null}
@@ -31,6 +38,66 @@ const saveAllEntries = (entries) => {
 export const getTodayEntry = () => {
   const today = todayISO();
   return getAllEntries().find((e) => e.date === today) ?? null;
+};
+
+/**
+ * Returns the entry for a specific ISO date or null.
+ * @param {string} isoDate
+ * @returns {object|null}
+ */
+export const getEntryByDate = (isoDate) =>
+  getAllEntries().find((entry) => entry.date === isoDate) ?? null;
+
+/**
+ * Replaces or deletes an entry for a specific date.
+ * Empty entries are removed from storage.
+ * @param {object} entry
+ * @returns {object|null}
+ */
+export const replaceEntry = (entry) => {
+  const entries = getAllEntries();
+  const idx = entries.findIndex((item) => item.date === entry.date);
+
+  if (isEntryEmpty(entry)) {
+    if (idx !== -1) {
+      const nextEntries = [...entries];
+      nextEntries.splice(idx, 1);
+      saveAllEntries(sortEntries(nextEntries));
+    }
+    return null;
+  }
+
+  const now = Date.now();
+  const updated = {
+    id: entry.id ?? crypto.randomUUID(),
+    breaks: entry.breaks ?? [],
+    createdAt: entry.createdAt ?? now,
+    ...entry,
+    updatedAt: now,
+  };
+
+  if (idx === -1) {
+    saveAllEntries(sortEntries([updated, ...entries]));
+  } else {
+    const nextEntries = [...entries];
+    nextEntries[idx] = updated;
+    saveAllEntries(sortEntries(nextEntries));
+  }
+
+  return updated;
+};
+
+/**
+ * Deletes the entry for a specific ISO date.
+ * @param {string} isoDate
+ */
+export const deleteEntryByDate = (isoDate) => {
+  const entries = getAllEntries();
+  const idx = entries.findIndex((entry) => entry.date === isoDate);
+  if (idx === -1) return;
+  const nextEntries = [...entries];
+  nextEntries.splice(idx, 1);
+  saveAllEntries(sortEntries(nextEntries));
 };
 
 /**
@@ -74,19 +141,5 @@ export const upsertTodayEntry = (patch) => {
  * @returns {object}
  */
 export const replaceTodayEntry = (entry) => {
-  const today = todayISO();
-  const entries = getAllEntries();
-  const idx = entries.findIndex((e) => e.date === today);
-  const now = Date.now();
-  const updated = { ...entry, updatedAt: now };
-
-  if (idx === -1) {
-    saveAllEntries([updated, ...entries]);
-  } else {
-    const newEntries = [...entries];
-    newEntries[idx] = updated;
-    saveAllEntries(newEntries);
-  }
-
-  return updated;
+  return replaceEntry({ ...entry, date: todayISO() });
 };

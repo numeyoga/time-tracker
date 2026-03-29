@@ -1,10 +1,10 @@
 ---
 id: TT-7
 title: Temps passé par projet aujourd'hui
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:55'
-updated_date: '2026-03-27 22:31'
+updated_date: '2026-03-29 14:40'
 labels:
   - code
   - design
@@ -15,7 +15,7 @@ references:
   - Covenant 03-composants.md §10 (Badge)
   - Covenant 05-etats-feedback.md §6 (Empty state)
 priority: medium
-ordinal: 6000
+ordinal: 5000
 ---
 
 ## Description

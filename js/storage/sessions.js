@@ -1,3 +1,5 @@
+import { validateDateRange, validateRequired } from '../utils/validation.js';
+
 const STORAGE_KEY = 'time-tracker-sessions';
 const MULTI_KEY = 'time-tracker-multi-project';
 
@@ -102,13 +104,18 @@ export const startSession = (projectId) => {
  * @returns {object}
  */
 export const createManualSession = ({ projectId, startedAt, endedAt }) => {
+  const projectValidation = validateRequired(projectId, 'Veuillez sélectionner un projet');
+  if (!projectValidation.valid) throw new Error(projectValidation.error);
+
+  const rangeValidation = validateDateRange(startedAt, endedAt, {
+    startRequiredMessage: 'Heure de début requise',
+    endRequiredMessage: 'Heure de fin requise',
+    orderMessage: 'La fin doit être après le début',
+  });
+  if (!rangeValidation.valid) throw new Error(rangeValidation.error);
+
   const startMs = new Date(startedAt).getTime();
   const endMs = new Date(endedAt).getTime();
-
-  if (!projectId) throw new Error('Veuillez sélectionner un projet');
-  if (Number.isNaN(startMs) || Number.isNaN(endMs) || endMs <= startMs) {
-    throw new Error('La session manuelle est invalide.');
-  }
 
   const session = {
     id: `sess_${crypto.randomUUID()}`,
@@ -201,11 +208,20 @@ export const updateSession = (sessionId, { startedAt, endedAt }) => {
   const index = sessions.findIndex((session) => session.id === sessionId);
   if (index === -1) return null;
 
+  const startRequired = validateRequired(startedAt, 'Heure de début requise');
+  if (!startRequired.valid) throw new Error(startRequired.error);
+
+  if (endedAt != null) {
+    const rangeValidation = validateDateRange(startedAt, endedAt, {
+      startRequiredMessage: 'Heure de début requise',
+      endRequiredMessage: 'Heure de fin requise',
+      orderMessage: 'La fin doit être après le début',
+    });
+    if (!rangeValidation.valid) throw new Error(rangeValidation.error);
+  }
+
   const startMs = new Date(startedAt).getTime();
   const endMs = endedAt == null ? null : new Date(endedAt).getTime();
-  if (Number.isNaN(startMs) || (endMs != null && (Number.isNaN(endMs) || endMs <= startMs))) {
-    throw new Error('La session est invalide.');
-  }
 
   const nextSession = {
     ...sessions[index],

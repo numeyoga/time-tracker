@@ -1,0 +1,100 @@
+.report-section {
+  display: grid;
+  gap: var(--gap-md);
+}
+
+.report-section__title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+}
+
+.report-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+  flex-wrap: wrap;
+}
+
+.tabs__list {
+  display: inline-flex;
+  gap: var(--gap-xs);
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-subtle);
+}
+
+.tabs__tab {
+  min-height: 2.25rem;
+  padding: var(--padding-sm) var(--padding-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--color-text-subtle);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+}
+
+.tabs__tab[aria-selected="true"] {
+  background-color: var(--color-bg-default);
+  color: var(--color-text-default);
+  box-shadow: var(--shadow-xs);
+}
+
+.report-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+}
+
+.report-nav__label {
+  min-width: 12rem;
+  text-align: center;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+}
+
+.report-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-md);
+}
+
+.card--kpi {
+  border-inline-start: var(--border-width-thick) solid var(--color-primary);
+}
+
+.report-kpi__label {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.report-kpi__value {
+  margin-top: var(--space-2);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+}
+
+.report-table__day-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-xs);
+}
+
+.data-table__td--total,
+.data-table__th--total {
+  background-color: var(--color-warning-subtle);
+}
+
+.data-table__foot .data-table__td {
+  font-weight: var(--font-weight-medium);
+}
+
+@media (max-width: 1023px) {
+  .report-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}

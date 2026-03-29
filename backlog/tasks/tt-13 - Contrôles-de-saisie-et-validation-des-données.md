@@ -1,10 +1,10 @@
 ---
 id: TT-13
 title: Contrôles de saisie et validation des données
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:56'
-updated_date: '2026-03-28 21:37'
+updated_date: '2026-03-29 18:08'
 labels:
   - code
 dependencies: []
@@ -13,7 +13,7 @@ references:
   - Covenant 03-composants.md §3 (Input/Form field)
   - Covenant 04-patterns.md §8 (Toast)
 priority: high
-ordinal: 12000
+ordinal: 10000
 ---
 
 ## Description

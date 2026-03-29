@@ -2,6 +2,8 @@ import { getAllProjects, getProjectById } from '../storage/projects.js';
 import { createManualSession } from '../storage/sessions.js';
 import { getTodayEntry } from '../storage/entries.js';
 import { todayISO } from '../utils/time.js';
+import { validateDateRange, validateRequired } from '../utils/validation.js';
+import { showToast } from './toast.js';
 
 const DEFAULT_START_TIME = '09:00';
 const DEFAULT_DURATION_HOURS = '1';
@@ -44,9 +46,7 @@ const getFieldState = ({
   const today = todayISO();
   const startedAt = createDateTime(dateValue, startTime);
 
-  if (!projectId) {
-    errors.project = 'Veuillez sélectionner un projet';
-  }
+  errors.project = validateRequired(projectId, 'Veuillez sélectionner un projet').error;
 
   if (!dateValue) {
     errors.date = 'Date invalide';
@@ -75,8 +75,18 @@ const getFieldState = ({
     }
   } else {
     endedAt = createDateTime(dateValue, endTime);
-    if (!endTime || !endedAt || !startedAt || endedAt.getTime() <= startedAt.getTime()) {
-      errors.endTime = "L'heure de fin doit être après le début";
+    const endRequired = validateRequired(endTime, 'Heure de fin requise');
+    if (!endRequired.valid) {
+      errors.endTime = endRequired.error;
+    } else {
+      const rangeValidation = validateDateRange(startedAt, endedAt, {
+        startRequiredMessage: 'Heure de début requise',
+        endRequiredMessage: 'Heure de fin requise',
+        orderMessage: 'La fin doit être après le début',
+      });
+      if (!rangeValidation.valid) {
+        errors.endTime = rangeValidation.error;
+      }
     }
   }
 
@@ -226,11 +236,17 @@ export const openAddTimeDialog = ({ onSuccess } = {}) => {
       const validation = renderValidation();
       if (!validation.isValid) return;
 
-      const session = createManualSession({
-        projectId: projectSelect.value,
-        startedAt: validation.startedAt.toISOString(),
-        endedAt: validation.endedAt.toISOString(),
-      });
+      let session;
+      try {
+        session = createManualSession({
+          projectId: projectSelect.value,
+          startedAt: validation.startedAt.toISOString(),
+          endedAt: validation.endedAt.toISOString(),
+        });
+      } catch (error) {
+        showToast({ message: error.message || 'Erreur lors de la sauvegarde', variant: 'danger' });
+        return;
+      }
 
       onSuccess?.(session, getProjectById(session.projectId));
       finish(session);

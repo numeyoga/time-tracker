@@ -1,0 +1,59 @@
+.project-time-section {
+  display: grid;
+  gap: var(--gap-md);
+}
+
+.project-time-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-time-section__title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+}
+
+.project-time-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: var(--gap-md);
+}
+
+.project-time-card {
+  min-width: 0;
+}
+
+.project-time-card .card__header {
+  align-items: flex-start;
+}
+
+.project-time-card .card__body {
+  display: grid;
+  gap: var(--gap-sm);
+}
+
+.project-time__duration {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-default);
+}
+
+.project-time__bar-wrapper {
+  overflow: hidden;
+  height: var(--space-2);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-subtle);
+}
+
+.project-time__bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary);
+}
+
+.project-time__percent {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}

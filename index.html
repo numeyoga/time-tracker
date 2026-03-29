@@ -32,6 +32,12 @@
     <link rel="stylesheet" href="css/components/timer-card.css" />
     <link rel="stylesheet" href="css/components/add-time-modal.css" />
     <link rel="stylesheet" href="css/components/project-history-drawer.css" />
+    <link rel="stylesheet" href="css/components/project-time-overview.css" />
+    <link rel="stylesheet" href="css/components/timeline-overview.css" />
+    <link rel="stylesheet" href="css/components/report-stats.css" />
+    <link rel="stylesheet" href="css/components/day-timeline-drawer.css" />
+    <link rel="stylesheet" href="css/components/entry-management-drawer.css" />
+    <link rel="stylesheet" href="css/components/data-transfer.css" />
   </head>
   <body>
 
@@ -108,6 +114,65 @@
           <path d="M21 10v8a2 2 0 0 1-2 2"/>
           <path d="m3 3 18 18"/>
         </symbol>
+        <symbol id="icon-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 14a1 1 0 0 1-.78-1.63l9-11.5A1 1 0 0 1 14 1.5V10h6a1 1 0 0 1 .79 1.61l-9 11.88A1 1 0 0 1 10 22.88V14z"/>
+        </symbol>
+        <symbol id="icon-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="8" height="4" x="8" y="2" rx="1"/>
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+        </symbol>
+        <symbol id="icon-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </symbol>
+        <symbol id="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"/>
+        </symbol>
+        <symbol id="icon-bar-chart-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" x2="18" y1="20" y2="10"/>
+          <line x1="12" x2="12" y1="20" y2="4"/>
+          <line x1="6" x2="6" y1="20" y2="14"/>
+        </symbol>
+        <symbol id="icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 1.75l-.12.91a2 2 0 0 1-1.52 1.67l-.9.22a2 2 0 0 0-1.22 3.05l.48.79a2 2 0 0 1 0 2.08l-.48.79a2 2 0 0 0 1.22 3.05l.9.22a2 2 0 0 1 1.52 1.67l.12.91a2 2 0 0 0 2 1.75h.44a2 2 0 0 0 2-1.75l.12-.91a2 2 0 0 1 1.52-1.67l.9-.22a2 2 0 0 0 1.22-3.05l-.48-.79a2 2 0 0 1 0-2.08l.48-.79a2 2 0 0 0-1.22-3.05l-.9-.22a2 2 0 0 1-1.52-1.67l-.12-.91a2 2 0 0 0-2-1.75z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </symbol>
+        <symbol id="icon-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </symbol>
+        <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </symbol>
+        <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 16v-4"/>
+          <path d="M12 8h.01"/>
+        </symbol>
+        <symbol id="icon-alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m10.29 3.86-8.18 14.14A2 2 0 0 0 3.84 21h16.32a2 2 0 0 0 1.73-3l-8.18-14.14a2 2 0 0 0-3.46 0Z"/>
+          <path d="M12 9v4"/>
+          <path d="M12 17h.01"/>
+        </symbol>
+        <symbol id="icon-alert-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </symbol>
+        <symbol id="icon-upload-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 16.58A5 5 0 1 0 7 12a4 4 0 0 0 0 8h9a3 3 0 0 0 0-6h-1"/>
+          <polyline points="8 16 12 12 16 16"/>
+          <line x1="12" y1="12" x2="12" y2="21"/>
+        </symbol>
+        <symbol id="icon-file-json" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <path d="M14 2v6h6"/>
+          <path d="M10 12h1"/>
+          <path d="M10 16h4"/>
+          <path d="M8 8h1"/>
+        </symbol>
       </defs>
     </svg>
 
@@ -128,6 +193,14 @@
           </a>
 
           <div class="topbar__actions" role="toolbar" aria-label="Actions globales">
+            <button class="btn" data-variant="secondary" data-size="sm" type="button" data-js-export-open>
+              <svg class="icon" aria-hidden="true"><use href="#icon-download"></use></svg>
+              <span class="btn__label">Export</span>
+            </button>
+            <button class="btn" data-variant="secondary" data-size="sm" type="button" data-js-import-open>
+              <svg class="icon" aria-hidden="true"><use href="#icon-upload"></use></svg>
+              <span class="btn__label">Import</span>
+            </button>
             <button class="topbar__action-btn" type="button" aria-label="Paramètres">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <circle cx="12" cy="12" r="3" />
@@ -169,13 +242,19 @@
                 <time data-js-today-date></time>
               </p>
             </div>
+            <div class="page__header-end">
+              <button class="btn" data-variant="secondary" type="button" data-js-entry-manage-global>
+                <svg class="icon" aria-hidden="true"><use href="#icon-settings"></use></svg>
+                <span class="btn__label">Gérer les entrées</span>
+              </button>
+            </div>
           </div>
 
           <!-- Page body -->
           <div class="page__body">
 
             <!-- Punch Clock Card -->
-            <article class="card" data-js-punch-clock style="max-width: 36rem;">
+            <article class="card" data-js-punch-clock>
 
               <header class="card__header">
                 <div>
@@ -247,7 +326,7 @@
             </article><!-- /.card -->
 
             <!-- Timer Card (Chronomètre) -->
-            <article class="timer-card" data-js-timer-card style="max-width: 36rem;">
+            <article class="timer-card" data-js-timer-card>
               <div class="timer-card__header">
                 <span class="badge" data-variant="neutral" data-js-timer-badge>Chronomètre</span>
                 <span class="timer-card__status" data-js-timer-status>Aucun projet en cours</span>
@@ -286,7 +365,7 @@
             </article>
 
             <!-- Projects Card -->
-            <section class="card" data-js-projects-card style="max-width: 36rem;">
+            <section class="card" data-js-projects-card>
 
               <header class="card__header">
                 <h2 class="card__title">Projets</h2>
@@ -324,10 +403,41 @@
 
             </section><!-- /.card projects -->
 
+            <section class="project-time-section" aria-labelledby="project-time-title">
+              <div class="project-time-section__header">
+                <h2 class="project-time-section__title" id="project-time-title">Temps par projet aujourd'hui</h2>
+              </div>
+              <div data-js-project-time-content></div>
+            </section>
+
+            <article class="card" data-js-timeline-card>
+              <div class="card__header">
+                <h2 class="card__title">Répartition de la journée</h2>
+                <button class="btn" data-variant="ghost" data-size="sm" type="button" data-js-timeline-copy aria-label="Copier la répartition">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-clipboard"></use></svg>
+                  <span class="btn__label">Copier</span>
+                </button>
+              </div>
+              <div class="card__body">
+                <div class="timeline" data-js-timeline-content></div>
+              </div>
+            </article>
+
+            <section class="report-section" aria-labelledby="report-title">
+              <div class="report-section__header">
+                <h2 class="report-section__title" id="report-title">Rapports et Statistiques</h2>
+              </div>
+              <div data-js-report-stats></div>
+            </section>
+
           </div><!-- /.page__body -->
         </div><!-- /.page -->
 
       </main>
+
+      <footer class="app-shell__status" aria-hidden="true">
+        <div class="statusbar"></div>
+      </footer>
 
     </div><!-- /.app-shell -->
 
@@ -365,6 +475,111 @@
       </div>
     </dialog>
 
+    <dialog class="modal" data-js-export-dialog aria-labelledby="export-dialog-title" aria-modal="true">
+      <div class="modal__header">
+        <h2 class="modal__title" id="export-dialog-title">Exporter les sessions</h2>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-export-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <form class="data-transfer-form" id="export-form" data-js-export-form novalidate>
+          <div class="data-transfer-form__row">
+            <div class="form-field">
+              <label class="form-field__label" for="export-start">Date de début</label>
+              <input class="input" type="date" id="export-start" data-js-export-start required />
+            </div>
+            <div class="form-field">
+              <label class="form-field__label" for="export-end">Date de fin</label>
+              <input class="input" type="date" id="export-end" data-js-export-end required />
+              <span class="form-field__error" id="export-range-error" data-js-export-error role="alert" hidden></span>
+            </div>
+          </div>
+          <div class="alert" data-variant="info">
+            <svg class="alert__icon" aria-hidden="true"><use href="#icon-info"></use></svg>
+            <div class="alert__content">
+              <p class="alert__message">Les pointages et sessions projets de la période seront exportés au format JSON.</p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn" data-variant="secondary" data-js-export-close type="button">Annuler</button>
+        <button class="btn" data-variant="danger" type="submit" form="export-form" data-js-export-confirm disabled>
+          <svg class="icon" aria-hidden="true"><use href="#icon-download"></use></svg>
+          <span class="btn__label">Exporter</span>
+        </button>
+      </div>
+    </dialog>
+
+    <dialog class="modal" data-js-import-dialog aria-labelledby="import-dialog-title" aria-modal="true" data-size="lg">
+      <div class="modal__header">
+        <h2 class="modal__title" id="import-dialog-title">Importer des sessions</h2>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-import-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="modal__body data-transfer-import">
+        <div class="alert" data-variant="warning">
+          <svg class="alert__icon" aria-hidden="true"><use href="#icon-alert-triangle"></use></svg>
+          <div class="alert__content">
+            <p class="alert__message">L'import remplacera TOUTES les données actuelles. Cette action est irréversible.</p>
+          </div>
+        </div>
+
+        <div class="import-dropzone" data-js-import-dropzone>
+          <svg class="import-dropzone__icon" aria-hidden="true"><use href="#icon-upload-cloud"></use></svg>
+          <p class="import-dropzone__title">Glissez un fichier JSON ou</p>
+          <button class="btn" data-variant="secondary" data-size="sm" type="button" data-js-import-browse>Parcourir…</button>
+          <input type="file" accept=".json" hidden data-js-import-file />
+        </div>
+
+        <div class="import-file" data-js-import-file-box hidden>
+          <div class="import-file__summary">
+            <svg class="icon import-file__icon" aria-hidden="true"><use href="#icon-file-json"></use></svg>
+            <div class="import-file__meta">
+              <span class="import-file__name" data-js-import-file-name></span>
+              <span class="import-file__size" data-js-import-file-size></span>
+            </div>
+          </div>
+          <button class="btn" data-variant="ghost" data-size="sm" type="button" data-js-import-clear aria-label="Retirer le fichier">
+            <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+          </button>
+        </div>
+
+        <div class="alert" data-variant="danger" data-js-import-error hidden>
+          <svg class="alert__icon" aria-hidden="true"><use href="#icon-alert-circle"></use></svg>
+          <div class="alert__content">
+            <p class="alert__message" data-js-import-error-message></p>
+          </div>
+        </div>
+
+        <div class="import-preview" data-js-import-preview hidden></div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn" data-variant="secondary" data-js-import-close type="button">Annuler</button>
+        <button class="btn" data-variant="danger" type="button" data-js-import-confirm disabled>
+          <svg class="icon" aria-hidden="true"><use href="#icon-upload"></use></svg>
+          <span class="btn__label">Importer</span>
+        </button>
+      </div>
+    </dialog>
+
+    <dialog class="modal" data-js-import-confirm-dialog aria-labelledby="import-confirm-title" aria-modal="true" data-size="sm">
+      <div class="modal__header">
+        <h2 class="modal__title" id="import-confirm-title">Confirmer l'import</h2>
+      </div>
+      <div class="modal__body data-transfer-confirm">
+        <svg class="data-transfer-confirm__icon" aria-hidden="true"><use href="#icon-alert-triangle"></use></svg>
+        <p>Toutes les données actuelles seront définitivement remplacées.</p>
+        <p>Voulez-vous continuer ?</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn" data-variant="secondary" data-js-import-confirm-close type="button">Annuler</button>
+        <button class="btn" data-variant="danger" data-js-import-confirm-accept type="button">Confirmer l'import</button>
+      </div>
+    </dialog>
+
     <dialog
       class="drawer"
       data-js-project-history-drawer
@@ -379,6 +594,86 @@
       <div class="drawer__body" data-js-project-history-content></div>
       <div class="drawer__footer">
         <button class="btn" data-variant="secondary" data-js-project-history-close type="button">Fermer</button>
+      </div>
+    </dialog>
+
+    <dialog class="drawer" data-js-day-timeline-drawer aria-labelledby="day-timeline-title">
+      <div class="drawer__header">
+        <h2 class="drawer__title" id="day-timeline-title" data-js-day-timeline-title>Timeline du jour</h2>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-day-timeline-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="drawer__body day-timeline-drawer__body">
+        <div class="timeline" data-js-day-timeline-content></div>
+        <h3 class="day-timeline-drawer__subtitle">Détail de la journée</h3>
+        <div data-js-day-timeline-events></div>
+      </div>
+      <div class="drawer__footer">
+        <button class="btn" data-variant="secondary" data-js-day-timeline-close type="button">Fermer</button>
+      </div>
+    </dialog>
+
+    <dialog class="drawer" data-js-entry-management-drawer aria-labelledby="entry-management-title">
+      <div class="drawer__header">
+        <div>
+          <h2 class="drawer__title" id="entry-management-title" data-js-entry-management-title>Gestion des entrées</h2>
+          <p class="entry-management__subtitle" data-js-entry-management-subtitle>Vue globale de toutes les journées.</p>
+        </div>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-entry-management-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="drawer__body entry-management__body">
+        <div class="entry-management__content" data-js-entry-management-content></div>
+      </div>
+      <div class="drawer__footer">
+        <button class="btn" data-variant="secondary" data-js-entry-management-close type="button">Fermer</button>
+        <button class="btn" data-variant="primary" data-js-entry-management-add type="button">
+          <svg class="icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
+          <span class="btn__label">Ajouter un pointage</span>
+        </button>
+      </div>
+    </dialog>
+
+    <dialog class="modal" data-js-entry-add-dialog aria-labelledby="entry-add-title" aria-modal="true">
+      <div class="modal__header">
+        <h2 class="modal__title" id="entry-add-title">Ajouter un pointage</h2>
+        <button class="btn" data-variant="ghost" data-size="sm" data-js-entry-add-close type="button" aria-label="Fermer">
+          <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <form class="entry-add-form" id="entry-add-form" data-js-entry-add-form novalidate>
+          <div class="form-field">
+            <label class="form-field__label" for="entry-add-type">Type de pointage</label>
+            <div class="select-wrapper">
+              <select class="select" id="entry-add-type" data-js-entry-add-type required>
+                <option value="arrival">Arrivée</option>
+                <option value="breakStart">Début pause</option>
+                <option value="breakEnd">Fin pause</option>
+                <option value="departure">Départ</option>
+              </select>
+            </div>
+            <span class="form-field__error" id="entry-add-type-error" data-js-entry-add-type-error role="alert" hidden></span>
+          </div>
+          <div class="entry-add-form__row">
+            <div class="form-field">
+              <label class="form-field__label" for="entry-add-date">Date</label>
+              <input class="input" type="date" id="entry-add-date" data-js-entry-add-date required />
+              <span class="form-field__error" id="entry-add-date-error" data-js-entry-add-date-error role="alert" hidden></span>
+            </div>
+            <div class="form-field">
+              <label class="form-field__label" for="entry-add-time">Heure</label>
+              <input class="input" type="time" id="entry-add-time" data-js-entry-add-time required step="60" />
+              <span class="form-field__error" id="entry-add-time-error" data-js-entry-add-time-error role="alert" hidden></span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn" data-variant="secondary" data-js-entry-add-close type="button">Annuler</button>
+        <button class="btn" data-variant="primary" type="submit" form="entry-add-form" data-js-entry-add-confirm disabled>Ajouter</button>
       </div>
     </dialog>
 

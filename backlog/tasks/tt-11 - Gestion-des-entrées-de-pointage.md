@@ -1,10 +1,10 @@
 ---
 id: TT-11
 title: Gestion des entrées de pointage
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 21:56'
-updated_date: '2026-03-28 21:35'
+updated_date: '2026-03-29 17:28'
 labels:
   - code
   - design
@@ -17,7 +17,7 @@ references:
   - Covenant 03-composants.md §10 (Badge)
   - Covenant 05-etats-feedback.md §6 (Empty state)
 priority: medium
-ordinal: 10000
+ordinal: 9000
 ---
 
 ## Description

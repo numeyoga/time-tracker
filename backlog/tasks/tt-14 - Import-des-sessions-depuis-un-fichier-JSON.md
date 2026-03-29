@@ -1,10 +1,10 @@
 ---
 id: TT-14
 title: Import des sessions depuis un fichier JSON
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-03-27 22:01'
-updated_date: '2026-03-28 21:38'
+updated_date: '2026-03-29 19:41'
 labels:
   - code
   - design
@@ -16,7 +16,7 @@ references:
   - Covenant 03-composants.md §12 (Alert)
   - Covenant 04-patterns.md §8 (Toast)
 priority: low
-ordinal: 11500
+ordinal: 12000
 ---
 
 ## Description
