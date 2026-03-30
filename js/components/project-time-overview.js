@@ -1,8 +1,8 @@
 import { getAllProjects } from '../storage/projects.js';
 import { getActiveSessions, getAllSessions } from '../storage/sessions.js';
 
-const getTodayStartMs = () => {
-  const today = new Date();
+const getTodayStartMs = (now = Date.now()) => {
+  const today = new Date(now);
   today.setHours(0, 0, 0, 0);
   return today.getTime();
 };
@@ -16,7 +16,7 @@ const formatLongDuration = (ms) => {
 
 const getTodaySessions = (now = Date.now()) =>
   getAllSessions()
-    .filter((session) => new Date(session.startedAt).getTime() >= getTodayStartMs())
+    .filter((session) => new Date(session.startedAt).getTime() >= getTodayStartMs(now))
     .map((session) => ({
       ...session,
       startMs: new Date(session.startedAt).getTime(),

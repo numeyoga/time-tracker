@@ -6,17 +6,23 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('ouvre le drawer depuis TT-9 et permet editer, supprimer puis ajouter un pointage', async ({ page }) => {
-  await page.evaluate(() => {
-    localStorage.setItem('tt_entries', JSON.stringify([
-      {
-        id: 'entry-1',
-        date: '2026-03-24',
-        arrivedAt: new Date('2026-03-24T08:00:00.000Z').getTime(),
-        departedAt: new Date('2026-03-24T17:00:00.000Z').getTime(),
-        breaks: [],
-        createdAt: 1,
-      },
-    ]));
+  const mondayISO = await page.evaluate(() => {
+    const toISO = (d) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const monday = new Date();
+    monday.setHours(0, 0, 0, 0);
+    const dow = monday.getDay();
+    monday.setDate(monday.getDate() + (dow === 0 ? -6 : 1 - dow));
+    const at = (h, m = 0) => { const d = new Date(monday); d.setHours(h, m, 0, 0); return d; };
+    localStorage.setItem('tt_entries', JSON.stringify([{
+      id: 'entry-1',
+      date: toISO(monday),
+      arrivedAt: at(8).getTime(),
+      departedAt: at(17).getTime(),
+      breaks: [],
+      createdAt: 1,
+    }]));
+    return toISO(monday);
   });
 
   await page.reload();
@@ -25,7 +31,7 @@ test('ouvre le drawer depuis TT-9 et permet editer, supprimer puis ajouter un po
   const drawer = page.locator('[data-js-entry-management-drawer]');
   await expect(drawer).toBeVisible();
   await expect(drawer).toContainText('Gestion des entrées');
-  await expect(drawer).toContainText('2026-03-24');
+  await expect(drawer).toContainText(mondayISO);
 
   const departureItem = drawer.locator('[data-punch-type="departure"]');
   await departureItem.getByRole('button', { name: /Modifier départ/i }).click();
@@ -41,7 +47,7 @@ test('ouvre le drawer depuis TT-9 et permet editer, supprimer puis ajouter un po
   const addDialog = page.locator('[data-js-entry-add-dialog]');
   await expect(addDialog).toBeVisible();
   await addDialog.locator('[data-js-entry-add-type]').selectOption('departure');
-  await addDialog.locator('[data-js-entry-add-date]').fill('2026-03-24');
+  await addDialog.locator('[data-js-entry-add-date]').fill(mondayISO);
   await addDialog.locator('[data-js-entry-add-time]').fill('19:00');
   await addDialog.getByRole('button', { name: 'Ajouter' }).click();
 

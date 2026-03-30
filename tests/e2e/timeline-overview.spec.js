@@ -11,14 +11,7 @@ test('affiche un empty state si aucune arrivee', async ({ page }) => {
   await expect(page.getByText('Pointez votre arrivée pour voir la répartition')).toBeVisible();
 });
 
-test('affiche la timeline et copie la repartition', async ({ page }) => {
-  await page.addInitScript(() => {
-    navigator.clipboard.writeText = (text) => {
-      window.__copiedTimeline = text;
-      return Promise.resolve();
-    };
-  });
-
+test('affiche la timeline', async ({ page }) => {
   await page.evaluate(() => {
     localStorage.setItem('time-tracker-projects', JSON.stringify([
       { id: 'proj_a', name: 'Alpha', createdAt: '2026-03-29T07:00:00.000Z' },
@@ -47,12 +40,4 @@ test('affiche la timeline et copie la repartition', async ({ page }) => {
   await expect(page.locator('.timeline__legend')).toContainText('Pause');
   await expect(page.locator('.timeline__legend')).toContainText('Inactif');
   await expect(page.locator('.timeline__legend')).toContainText('Multi');
-
-  await page.locator('[data-js-timeline-copy]').click();
-  await expect(page.locator('[data-js-toast-container]')).toContainText('Répartition copiée');
-
-  const copied = await page.evaluate(() => window.__copiedTimeline);
-  expect(copied).toContain('Répartition du');
-  expect(copied).toContain('Pause');
-  expect(copied).toContain('Alpha + Beta');
 });

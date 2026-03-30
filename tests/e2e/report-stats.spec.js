@@ -13,17 +13,28 @@ test('affiche un empty state en absence de donnees', async ({ page }) => {
 
 test('affiche les KPI et le tableau hebdomadaire puis permet de passer en mois', async ({ page }) => {
   await page.evaluate(() => {
+    const toISO = (d) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const at = (base, h, m = 0) => { const d = new Date(base); d.setHours(h, m, 0, 0); return d; };
+
+    const monday = new Date();
+    monday.setHours(0, 0, 0, 0);
+    const dow = monday.getDay();
+    monday.setDate(monday.getDate() + (dow === 0 ? -6 : 1 - dow));
+    const tuesday = new Date(monday);
+    tuesday.setDate(monday.getDate() + 1);
+
     localStorage.setItem('time-tracker-projects', JSON.stringify([
-      { id: 'proj_a', name: 'Alpha', createdAt: '2026-03-23T07:00:00.000Z' },
-      { id: 'proj_b', name: 'Beta', createdAt: '2026-03-23T07:05:00.000Z' },
+      { id: 'proj_a', name: 'Alpha', createdAt: at(monday, 7).toISOString() },
+      { id: 'proj_b', name: 'Beta', createdAt: at(monday, 7, 5).toISOString() },
     ]));
     localStorage.setItem('tt_entries', JSON.stringify([
-      { id: 'e1', date: '2026-03-23', arrivedAt: new Date('2026-03-23T08:00:00.000Z').getTime(), departedAt: new Date('2026-03-23T16:00:00.000Z').getTime(), breaks: [] },
-      { id: 'e2', date: '2026-03-24', arrivedAt: new Date('2026-03-24T08:00:00.000Z').getTime(), departedAt: new Date('2026-03-24T15:00:00.000Z').getTime(), breaks: [] },
+      { id: 'e1', date: toISO(monday), arrivedAt: at(monday, 8).getTime(), departedAt: at(monday, 16).getTime(), breaks: [] },
+      { id: 'e2', date: toISO(tuesday), arrivedAt: at(tuesday, 8).getTime(), departedAt: at(tuesday, 15).getTime(), breaks: [] },
     ]));
     localStorage.setItem('time-tracker-sessions', JSON.stringify([
-      { id: 's1', projectId: 'proj_a', startedAt: '2026-03-23T09:00:00.000Z', endedAt: '2026-03-23T12:30:00.000Z', duration: 12_600_000 },
-      { id: 's2', projectId: 'proj_b', startedAt: '2026-03-24T09:00:00.000Z', endedAt: '2026-03-24T11:00:00.000Z', duration: 7_200_000 },
+      { id: 's1', projectId: 'proj_a', startedAt: at(monday, 9).toISOString(), endedAt: at(monday, 12, 30).toISOString(), duration: 12_600_000 },
+      { id: 's2', projectId: 'proj_b', startedAt: at(tuesday, 9).toISOString(), endedAt: at(tuesday, 11).toISOString(), duration: 7_200_000 },
     ]));
   });
 

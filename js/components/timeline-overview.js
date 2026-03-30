@@ -142,9 +142,9 @@ export const computeTimelineSegmentsForDate = (isoDate, now = Date.now()) => {
 };
 
 export const computeTimelineSegments = (now = Date.now()) => {
-  const entry = getTodayEntry();
-  if (!entry) return null;
-  return computeTimelineSegmentsForDate(entry.date, now);
+  const d = new Date(now);
+  const isoDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  return computeTimelineSegmentsForDate(isoDate, now);
 };
 
 const createIcon = (href, className = 'icon') => {

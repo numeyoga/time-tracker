@@ -6,27 +6,33 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('ouvre le drawer timeline quotidienne depuis le tableau des rapports', async ({ page }) => {
-  await page.evaluate(() => {
+  const mondayISO = await page.evaluate(() => {
+    const toISO = (d) =>
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    const monday = new Date();
+    monday.setHours(0, 0, 0, 0);
+    const dow = monday.getDay();
+    monday.setDate(monday.getDate() + (dow === 0 ? -6 : 1 - dow));
+    const at = (h, m = 0) => { const d = new Date(monday); d.setHours(h, m, 0, 0); return d; };
     localStorage.setItem('time-tracker-projects', JSON.stringify([
-      { id: 'proj_a', name: 'Alpha', createdAt: '2026-03-23T07:00:00.000Z' },
+      { id: 'proj_a', name: 'Alpha', createdAt: at(7).toISOString() },
     ]));
-    localStorage.setItem('tt_entries', JSON.stringify([
-      {
-        id: 'e1',
-        date: '2026-03-23',
-        arrivedAt: new Date('2026-03-23T09:00:00.000Z').getTime(),
-        departedAt: new Date('2026-03-23T12:00:00.000Z').getTime(),
-        breaks: [{ startAt: new Date('2026-03-23T10:00:00.000Z').getTime(), endAt: new Date('2026-03-23T10:15:00.000Z').getTime() }],
-      },
-    ]));
+    localStorage.setItem('tt_entries', JSON.stringify([{
+      id: 'e1',
+      date: toISO(monday),
+      arrivedAt: at(9).getTime(),
+      departedAt: at(12).getTime(),
+      breaks: [{ startAt: at(10).getTime(), endAt: at(10, 15).getTime() }],
+    }]));
     localStorage.setItem('time-tracker-sessions', JSON.stringify([
-      { id: 's1', projectId: 'proj_a', startedAt: '2026-03-23T09:00:00.000Z', endedAt: '2026-03-23T10:00:00.000Z', duration: 3_600_000 },
-      { id: 's2', projectId: 'proj_a', startedAt: '2026-03-23T10:15:00.000Z', endedAt: '2026-03-23T12:00:00.000Z', duration: 6_300_000 },
+      { id: 's1', projectId: 'proj_a', startedAt: at(9).toISOString(), endedAt: at(10).toISOString(), duration: 3_600_000 },
+      { id: 's2', projectId: 'proj_a', startedAt: at(10, 15).toISOString(), endedAt: at(12).toISOString(), duration: 6_300_000 },
     ]));
+    return toISO(monday);
   });
 
   await page.reload();
-  await page.getByRole('button', { name: /Ouvrir la timeline du 2026-03-23/ }).click();
+  await page.getByRole('button', { name: new RegExp(`Ouvrir la timeline du ${mondayISO}`) }).click();
 
   const drawer = page.locator('[data-js-day-timeline-drawer]');
   await expect(drawer).toBeVisible();

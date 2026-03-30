@@ -27,3 +27,27 @@ You MUST read the overview resource to understand the complete workflow. The inf
 </CRITICAL_INSTRUCTION>
 
 <!-- BACKLOG.MD MCP GUIDELINES END -->
+
+## Tests
+
+### Synchroniser les tests avec les suppressions de fonctionnalités
+
+Quand une fonctionnalité est intentionnellement supprimée, le test E2E correspondant doit être mis à jour dans le même commit. Un test qui cherche un élément absent (`[data-js-timeline-copy]`) devient un faux négatif qui bloque la CI sans rapport avec les changements en cours. Le backlog (Final Summary de la task) est la source de vérité pour confirmer qu'une suppression est délibérée et non un bug.
+
+### Clock leak dans les fonctions paramétrées par `now`
+
+Une fonction qui accepte un paramètre `now` pour être testable mais appelle `new Date()` ou `Date.now()` en interne est partiellement testable — le paramètre n'isole pas complètement l'horloge. Toute dérivation temporelle (début de journée, date locale ISO, heure courante) doit passer par ce même `now` paramétré.
+
+Exemples concrets dans ce projet :
+
+- `getTodayStartMs()` dans `project-time-overview.js` doit recevoir `now` et faire `new Date(now)` plutôt que `new Date()`
+- `computeTimelineSegments(now)` doit dériver la date locale depuis `now` plutôt qu'appeler `getTodayEntry()` (qui utilise la vraie date système)
+
+Pour dériver une date locale ISO depuis un timestamp `now` de manière cohérente avec `todayISO()` :
+
+```js
+const d = new Date(now);
+const isoDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+```
+
+Ne pas utiliser `new Date(now).toISOString().slice(0, 10)` — c'est la date UTC, pas la date locale.
