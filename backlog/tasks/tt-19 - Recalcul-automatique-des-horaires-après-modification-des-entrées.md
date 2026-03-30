@@ -4,12 +4,13 @@ title: Recalcul automatique des horaires après modification des entrées
 status: Done
 assignee: []
 created_date: '2026-03-30 19:00'
-updated_date: '2026-03-30 19:27'
+updated_date: '2026-03-30 20:56'
 labels:
   - bug
   - code
 dependencies: []
 priority: high
+ordinal: 15000
 ---
 
 ## Description

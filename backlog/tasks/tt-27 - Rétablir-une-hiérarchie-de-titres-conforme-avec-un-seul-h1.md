@@ -4,7 +4,7 @@ title: Rétablir une hiérarchie de titres conforme avec un seul h1
 status: Done
 assignee: []
 created_date: '2026-03-30 22:23'
-updated_date: '2026-03-30 22:33'
+updated_date: '2026-03-30 20:56'
 labels:
   - code
   - design
@@ -13,6 +13,7 @@ dependencies: []
 references:
   - index.html
 priority: medium
+ordinal: 23000
 ---
 
 ## Description
@@ -25,14 +26,17 @@ Revoir l'en-tête de page et les titres des sections/cartes pour réintroduire u
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [x] #1 La page contient exactement un `<h1>` visible ou sémantiquement correct
-- [x] #2 La hiérarchie des titres est cohérente entre l'en-tête de page, les sections et les dialogues
-- [x] #3 La modification n'altère pas le layout ni les styles attendus des cartes et headers
-- [x] #4 Les lecteurs d'écran bénéficient d'une structure de navigation plus claire
+- [ ] #1 La page contient exactement un `<h1>` visible ou sémantiquement correct
+- [ ] #2 La hiérarchie des titres est cohérente entre l'en-tête de page, les sections et les dialogues
+- [ ] #3 La modification n'altère pas le layout ni les styles attendus des cartes et headers
+- [ ] #4 Les lecteurs d'écran bénéficient d'une structure de navigation plus claire
 <!-- AC:END -->
 
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
-Ajout d’un `h1` de page dans l’en-tête principal (`Aujourd'hui`) et d’un style minimal `.page__title` pour préserver le layout existant. La page a désormais un seul titre de niveau 1, avec les sections conservées en `h2`.
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+<!-- SECTION:FINAL_SUMMARY:END -->
+<!-- SECTION:FINAL_SUMMARY:END -->
+
 <!-- SECTION:FINAL_SUMMARY:END -->

@@ -4,7 +4,7 @@ title: Corrections suite à la revue de code TT-15
 status: Done
 assignee: []
 created_date: '2026-03-29 20:09'
-updated_date: '2026-03-29 20:27'
+updated_date: '2026-03-30 20:56'
 labels:
   - code
   - bug
@@ -12,6 +12,7 @@ labels:
 dependencies:
   - TT-15
 priority: medium
+ordinal: 21000
 ---
 
 ## Description

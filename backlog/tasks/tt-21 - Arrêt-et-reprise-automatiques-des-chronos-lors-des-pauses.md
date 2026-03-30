@@ -4,11 +4,12 @@ title: Arrêt et reprise automatiques des chronos lors des pauses
 status: Done
 assignee: []
 created_date: '2026-03-30 19:00'
-updated_date: '2026-03-30 19:09'
+updated_date: '2026-03-30 20:56'
 labels:
   - code
 dependencies: []
 priority: medium
+ordinal: 17000
 ---
 
 ## Description

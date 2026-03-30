@@ -4,13 +4,14 @@ title: Revue de code — TT-7 à TT-13
 status: Done
 assignee: []
 created_date: '2026-03-29 20:02'
-updated_date: '2026-03-29 20:27'
+updated_date: '2026-03-30 20:56'
 labels:
   - review
   - code
   - quality
 dependencies: []
 priority: medium
+ordinal: 20000
 ---
 
 ## Description

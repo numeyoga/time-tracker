@@ -4,11 +4,12 @@ title: Arrêt automatique des chronos au pointage de fin de journée
 status: Done
 assignee: []
 created_date: '2026-03-30 19:00'
-updated_date: '2026-03-30 19:09'
+updated_date: '2026-03-30 20:56'
 labels:
   - code
 dependencies: []
 priority: medium
+ordinal: 18000
 ---
 
 ## Description

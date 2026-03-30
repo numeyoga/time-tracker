@@ -4,12 +4,13 @@ title: Ajouter une favicon à l'application
 status: Done
 assignee: []
 created_date: '2026-03-30 19:00'
-updated_date: '2026-03-30 19:27'
+updated_date: '2026-03-30 20:56'
 labels:
   - design
   - code
 dependencies: []
 priority: low
+ordinal: 14000
 ---
 
 ## Description

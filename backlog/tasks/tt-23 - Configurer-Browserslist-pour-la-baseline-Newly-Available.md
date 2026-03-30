@@ -4,7 +4,7 @@ title: Configurer Browserslist pour la baseline Newly Available
 status: Done
 assignee: []
 created_date: '2026-03-30 22:23'
-updated_date: '2026-03-30 22:33'
+updated_date: '2026-03-30 20:56'
 labels:
   - code
   - design
@@ -13,6 +13,7 @@ references:
   - package.json
   - AGENTS.md
 priority: medium
+ordinal: 13000
 ---
 
 ## Description

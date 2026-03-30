@@ -4,7 +4,7 @@ title: Remplacer les sélecteurs JS basés sur les classes par des hooks data-js
 status: Done
 assignee: []
 created_date: '2026-03-30 22:23'
-updated_date: '2026-03-30 22:33'
+updated_date: '2026-03-30 20:56'
 labels:
   - code
   - design
@@ -15,6 +15,7 @@ references:
   - js/components/project-history-drawer.js
   - js/pages/today.js
 priority: high
+ordinal: 25000
 ---
 
 ## Description
@@ -27,14 +28,17 @@ L'audit a relevé plusieurs accès encore basés sur des classes de style (`.ent
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [x] #1 Les requêtes DOM du code applicatif n'utilisent plus de classes CSS comme sélecteurs fonctionnels
-- [x] #2 Les éléments dynamiques concernés exposent des attributs `data-js-*` explicites
-- [x] #3 Les comportements d'édition inline, suppression et focus continuent de fonctionner après migration
-- [x] #4 Aucune classe CSS n'est ajoutée ou manipulée uniquement pour servir de hook JS
+- [ ] #1 Les requêtes DOM du code applicatif n'utilisent plus de classes CSS comme sélecteurs fonctionnels
+- [ ] #2 Les éléments dynamiques concernés exposent des attributs `data-js-*` explicites
+- [ ] #3 Les comportements d'édition inline, suppression et focus continuent de fonctionner après migration
+- [ ] #4 Aucune classe CSS n'est ajoutée ou manipulée uniquement pour servir de hook JS
 <!-- AC:END -->
 
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
-Ajout de hooks `data-js-*` pour les labels et wrappers des listes de pointages, puis migration des sélecteurs JS de `today.js` et `entry-management-drawer.js` vers ces hooks. Suppression des derniers usages de `classList` utilitaires dans les états vides générés par JS.
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+<!-- SECTION:FINAL_SUMMARY:END -->
+<!-- SECTION:FINAL_SUMMARY:END -->
+
 <!-- SECTION:FINAL_SUMMARY:END -->

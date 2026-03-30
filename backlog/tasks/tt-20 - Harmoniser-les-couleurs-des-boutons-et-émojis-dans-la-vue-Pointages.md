@@ -4,12 +4,13 @@ title: Harmoniser les couleurs des boutons et émojis dans la vue Pointages
 status: Done
 assignee: []
 created_date: '2026-03-30 19:00'
-updated_date: '2026-03-30 19:27'
+updated_date: '2026-03-30 20:56'
 labels:
   - design
   - code
 dependencies: []
 priority: medium
+ordinal: 16000
 ---
 
 ## Description

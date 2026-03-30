@@ -4,7 +4,7 @@ title: Remplacer le styling inline des toasts par des états CSS
 status: Done
 assignee: []
 created_date: '2026-03-30 22:23'
-updated_date: '2026-03-30 22:33'
+updated_date: '2026-03-30 20:56'
 labels:
   - code
   - design
@@ -15,6 +15,7 @@ references:
   - css/components/toast.css
   - index.html
 priority: medium
+ordinal: 24000
 ---
 
 ## Description
@@ -27,14 +28,17 @@ Refactorer le composant toast pour déplacer ces états dans la feuille de style
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [x] #1 `js/components/toast.js` ne modifie plus les styles inline pour l'animation ou la fermeture
-- [x] #2 Les états visuels du toast sont pilotés par CSS via classes structurelles existantes ou attributs `data-*`
-- [x] #3 Les transitions continuent de respecter `prefers-reduced-motion`
-- [x] #4 Le comportement fonctionnel reste inchangé pour les toasts succès, erreur, warning et info
+- [ ] #1 `js/components/toast.js` ne modifie plus les styles inline pour l'animation ou la fermeture
+- [ ] #2 Les états visuels du toast sont pilotés par CSS via classes structurelles existantes ou attributs `data-*`
+- [ ] #3 Les transitions continuent de respecter `prefers-reduced-motion`
+- [ ] #4 Le comportement fonctionnel reste inchangé pour les toasts succès, erreur, warning et info
 <!-- AC:END -->
 
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
-Le composant toast utilise désormais `data-state="open|closing"` au lieu d’écrire `opacity`, `transform` et `transition` inline en JavaScript. Les transitions vivent dans `css/components/toast.css`, et chaque toast porte maintenant `role="status"`.
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+<!-- SECTION:FINAL_SUMMARY:END -->
+<!-- SECTION:FINAL_SUMMARY:END -->
+
 <!-- SECTION:FINAL_SUMMARY:END -->

@@ -6,7 +6,7 @@ title: >-
 status: Done
 assignee: []
 created_date: '2026-03-29 21:59'
-updated_date: '2026-03-29 22:11'
+updated_date: '2026-03-30 20:56'
 labels:
   - code
   - design
@@ -23,6 +23,7 @@ references:
   - css/components/sidenav.css
   - css/layout.css
 priority: medium
+ordinal: 19000
 ---
 
 ## Description
