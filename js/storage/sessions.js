@@ -269,3 +269,42 @@ export const isMultiProjectEnabled = () => {
 export const setMultiProjectEnabled = (enabled) => {
   localStorage.setItem(MULTI_KEY, String(enabled));
 };
+
+// ============================================================
+// Paused sessions (break tracking)
+// ============================================================
+
+const PAUSED_KEY = 'time-tracker-paused-project-ids';
+
+/**
+ * Saves the projectIds of all currently active sessions before a break.
+ * Call this before stopping sessions so they can be resumed on END_BREAK.
+ * @returns {string[]} the saved project IDs
+ */
+export const savePausedProjects = () => {
+  const ids = getActiveSessions().map((s) => s.projectId);
+  localStorage.setItem(PAUSED_KEY, JSON.stringify(ids));
+  return ids;
+};
+
+/**
+ * Returns the project IDs that were active before the last break.
+ * @returns {string[]}
+ */
+export const getPausedProjects = () => {
+  try {
+    const raw = localStorage.getItem(PAUSED_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+};
+
+/**
+ * Clears the paused project IDs from storage.
+ * Call after END_BREAK (resume) or DEPART (no resume needed).
+ */
+export const clearPausedProjects = () => {
+  localStorage.removeItem(PAUSED_KEY);
+};

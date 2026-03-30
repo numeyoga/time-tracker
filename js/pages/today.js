@@ -29,6 +29,9 @@ import {
   isMultiProjectEnabled,
   setMultiProjectEnabled,
   deleteSessionsForProject,
+  savePausedProjects,
+  getPausedProjects,
+  clearPausedProjects,
 } from '../storage/sessions.js';
 import {
   renderTimerCard,
@@ -199,11 +202,30 @@ export const initTodayPage = () => {
       showToast({ message: 'Arrivée enregistrée.', variant: 'success' });
     } else if (newState === 'DEPARTED') {
       stopCounter();
-      showToast({ message: 'Départ enregistré.', variant: 'success' });
+      const stoppedCount = stopAllActiveSessions();
+      clearPausedProjects();
+      refreshAll();
+      const msg = stoppedCount > 0
+        ? `Départ enregistré. ${stoppedCount} chronomètre(s) arrêté(s).`
+        : 'Départ enregistré.';
+      showToast({ message: msg, variant: 'success' });
     } else if (event === 'START_BREAK') {
-      showToast({ message: 'Pause commencée.', variant: 'info' });
+      const pausedIds = savePausedProjects();
+      stopAllActiveSessions();
+      refreshAll();
+      const msg = pausedIds.length > 0
+        ? `Pause commencée. ${pausedIds.length} chronomètre(s) mis en pause.`
+        : 'Pause commencée.';
+      showToast({ message: msg, variant: 'info' });
     } else if (event === 'END_BREAK') {
-      showToast({ message: 'Pause terminée.', variant: 'info' });
+      const pausedIds = getPausedProjects();
+      pausedIds.filter((id) => getProjectById(id)).forEach(startSession);
+      clearPausedProjects();
+      refreshAll();
+      const msg = pausedIds.length > 0
+        ? `Pause terminée. ${pausedIds.length} chronomètre(s) repris.`
+        : 'Pause terminée.';
+      showToast({ message: msg, variant: 'info' });
     }
   });
 
@@ -240,6 +262,7 @@ export const initTodayPage = () => {
     }),
   });
   const refreshAll = () => {
+    renderPunchClock(getTodayEntry(), clockRoot);
     if (timerRoot) renderTimerCard(timerRoot);
     if (projectsCard) renderProjectList(projectsCard);
     if (projectTimeRoot) renderProjectTimeOverview(projectTimeRoot);
