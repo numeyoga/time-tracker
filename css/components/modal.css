@@ -8,14 +8,14 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
   max-width: 32rem;
-  width: calc(100% - var(--space-8));
+  width: calc(100% - var(--size-xl));
 
   background-color: var(--color-bg-default);
   color: var(--color-text-default);
 }
 
 .modal::backdrop {
-  background-color: rgb(0 0 0 / 0.5);
+  background-color: var(--color-overlay-backdrop);
 }
 
 .modal[data-size="sm"] { max-width: 24rem; }
@@ -93,10 +93,9 @@
               box-shadow var(--duration-fast) var(--ease-default);
 }
 
-.modal .input:focus {
-  outline: none;
+.modal .input:focus-visible {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px var(--color-primary-subtle);
+  box-shadow: var(--shadow-focus-ring);
 }
 
 .modal .input[aria-invalid="true"] {

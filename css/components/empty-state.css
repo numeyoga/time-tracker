@@ -10,13 +10,13 @@
   justify-content: center;
   gap: var(--gap-md);
 
-  padding: var(--space-16) var(--padding-lg);
+  padding: var(--size-4xl) var(--padding-lg);
   text-align: center;
 }
 
 .empty-state__icon {
-  width: 3rem;
-  height: 3rem;
+  width: var(--size-3xl);
+  height: var(--size-3xl);
   color: var(--color-text-placeholder);
 }
 

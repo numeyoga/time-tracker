@@ -6,7 +6,7 @@
 .punch-metrics {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--size-xs);
 }
 
 .punch-metrics__time {

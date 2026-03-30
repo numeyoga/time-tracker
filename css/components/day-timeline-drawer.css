@@ -22,7 +22,7 @@
 }
 
 .event-list__indicator {
-  inline-size: var(--space-1);
+  inline-size: var(--size-xs);
   align-self: stretch;
   border-radius: var(--radius-full);
 }

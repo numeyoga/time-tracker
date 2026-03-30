@@ -148,6 +148,10 @@
   gap: var(--gap-xs);
 }
 
+.page__title {
+  margin: 0;
+}
+
 .page__header-end {
   display: flex;
   align-items: center;

@@ -127,6 +127,17 @@
   --gap-lg: var(--space-6);
   --gap-xl: var(--space-8);
 
+  /* Dimensions sémantiques */
+  --size-2xs: var(--space-0-5);
+  --size-xs:  var(--space-1);
+  --size-sm:  var(--space-2);
+  --size-md:  var(--space-4);
+  --size-lg:  var(--space-6);
+  --size-xl:  var(--space-8);
+  --size-2xl: var(--space-10);
+  --size-3xl: var(--space-12);
+  --size-4xl: var(--space-16);
+
   /* ===========================================================================
      BORDURES ET RAYONS
      =========================================================================== */
@@ -211,6 +222,7 @@
   --component-icon-size-md:     var(--space-8);  /* 32px — conteneur d'icône medium */
   --component-time-min-width:   3.5rem;          /* 56px — largeur minimale d'un affichage HH:MM */
   --component-time-input-width: 6.5rem;          /* 104px — largeur d'un champ de saisie HH:MM */
+  --component-toggle-thumb-size: 0.875rem;
 
   /* ===========================================================================
      BREAKPOINTS
@@ -272,8 +284,12 @@
   --color-info-subtle:      var(--palette-info-50);
   --color-info-text:        var(--palette-info-700);
 
+  /* Overlay & focus */
+  --color-overlay-backdrop: color-mix(in srgb, var(--color-bg-inverse) 30%, transparent);
+
   /* Focus */
   --color-focus-ring:       var(--palette-primary-400);
+  --shadow-focus-ring:      0 0 0 var(--border-width-thick) var(--color-primary-subtle);
 }
 
 /* ===========================================================================
@@ -325,8 +341,12 @@
   --color-info-subtle:      var(--palette-info-900);
   --color-info-text:        var(--palette-info-100);
 
+  /* Overlay & focus */
+  --color-overlay-backdrop: color-mix(in srgb, var(--color-bg-inverse) 45%, transparent);
+
   /* Focus */
   --color-focus-ring:       var(--palette-primary-300);
+  --shadow-focus-ring:      0 0 0 var(--border-width-thick) var(--color-primary-subtle);
 }
 
 /* ===========================================================================

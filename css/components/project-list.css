@@ -42,6 +42,6 @@
 
 .project-list__actions {
   display: flex;
-  gap: var(--space-1);
+  gap: var(--size-xs);
   flex-shrink: 0;
 }

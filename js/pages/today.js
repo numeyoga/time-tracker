@@ -53,7 +53,7 @@ import { initDataTransfer } from '../components/data-transfer.js';
 
 const startInlineEdit = (item, clockRoot) => {
   const timeSpan = item.querySelector('[data-js-punch-time]');
-  if (!timeSpan || item.querySelector('.punch-list__time-input')) return;
+  if (!timeSpan || item.querySelector('[data-js-time-input]')) return;
 
   const currentTime = timeSpan.textContent.trim();
   timeSpan.hidden = true;
@@ -120,7 +120,7 @@ const startInlineEdit = (item, clockRoot) => {
 const deletePunch = async (item, clockRoot) => {
   const punchType = item.dataset.punchType;
   const breakIndex = item.dataset.breakIndex == null ? null : Number(item.dataset.breakIndex);
-  const label = item.querySelector('.punch-list__label')?.textContent ?? 'ce pointage';
+  const label = item.querySelector('[data-js-punch-label]')?.textContent ?? 'ce pointage';
 
   const confirmed = await openDeleteDialog(label);
   if (!confirmed) return;

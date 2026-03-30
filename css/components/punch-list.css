@@ -48,19 +48,18 @@
   background-color: var(--color-bg-default);
   border: var(--border-width-default) solid var(--color-primary);
   border-radius: var(--radius-sm);
-  padding: var(--space-0-5) var(--space-1);
+  padding: var(--size-2xs) var(--size-xs);
   width: 5.5rem;
-  outline: none;
-  box-shadow: 0 0 0 var(--border-width-thick) var(--color-primary-subtle, rgba(59, 130, 246, 0.15));
 }
 
 .punch-list__time-input:focus-visible {
   border-color: var(--color-primary);
+  box-shadow: var(--shadow-focus-ring);
 }
 
 .punch-list__actions {
   display: flex;
-  gap: var(--space-1);
+  gap: var(--size-xs);
   flex-shrink: 0;
 }
 
@@ -80,5 +79,5 @@
 }
 
 .punch-details[open] summary {
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--size-xs);
 }

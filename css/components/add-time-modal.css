@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap-sm);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--size-md);
 }
 
 .add-time-form {
@@ -24,7 +24,7 @@
   appearance: none;
   display: block;
   width: 100%;
-  padding: var(--padding-sm) var(--space-10) var(--padding-sm) var(--padding-md);
+  padding: var(--padding-sm) var(--size-2xl) var(--padding-sm) var(--padding-md);
   min-height: var(--component-height-control);
   font-family: var(--font-sans);
   font-size: var(--text-base);
@@ -42,9 +42,9 @@
   content: "";
   position: absolute;
   top: 50%;
-  right: var(--space-4);
-  width: var(--space-2);
-  height: var(--space-2);
+  right: var(--size-md);
+  width: var(--size-sm);
+  height: var(--size-sm);
   border-right: var(--border-width-default) solid var(--color-text-muted);
   border-bottom: var(--border-width-default) solid var(--color-text-muted);
   transform: translateY(-70%) rotate(45deg);
@@ -100,7 +100,7 @@
   min-width: 0;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 767px) {
   .add-time-form__row {
     grid-template-columns: 1fr;
   }

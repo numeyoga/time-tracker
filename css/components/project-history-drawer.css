@@ -5,7 +5,7 @@
   inset-inline-start: auto;
   display: flex;
   flex-direction: column;
-  width: min(32rem, calc(100% - var(--space-8)));
+  width: min(32rem, calc(100% - var(--size-xl)));
   max-width: none;
   max-height: 100dvh;
   height: 100dvh;
@@ -24,7 +24,7 @@
 }
 
 .drawer::backdrop {
-  background-color: color-mix(in srgb, var(--palette-neutral-1000) 30%, transparent);
+  background-color: var(--color-overlay-backdrop);
 }
 
 .drawer__header,
@@ -100,7 +100,7 @@
 }
 
 .data-table__td--actions .btn + .btn {
-  margin-inline-start: var(--space-1);
+  margin-inline-start: var(--size-xs);
 }
 
 .data-table__row:hover {
@@ -126,12 +126,12 @@
 
 .empty-state[data-size="sm"] {
   gap: var(--gap-sm);
-  padding-block: var(--space-12);
+  padding-block: var(--size-3xl);
 }
 
 .empty-state[data-size="sm"] .empty-state__icon {
-  width: var(--space-12);
-  height: var(--space-12);
+  width: var(--size-3xl);
+  height: var(--size-3xl);
 }
 
 @media (max-width: 767px) {

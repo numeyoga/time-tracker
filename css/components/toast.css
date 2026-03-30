@@ -4,8 +4,8 @@
 
 .toast-container {
   position: fixed;
-  bottom: var(--space-6);
-  right: var(--space-6);
+  bottom: var(--size-lg);
+  right: var(--size-lg);
   z-index: var(--z-toast);
 
   display: flex;
@@ -29,12 +29,20 @@
 
   pointer-events: auto;
   animation: toast-enter var(--duration-normal) var(--ease-out);
+  transition:
+    opacity var(--duration-fast) var(--ease-in),
+    transform var(--duration-fast) var(--ease-in);
+}
+
+.toast[data-state="closing"] {
+  opacity: 0;
+  transform: translateY(var(--size-sm));
 }
 
 @keyframes toast-enter {
   from {
     opacity: 0;
-    transform: translateY(var(--space-4));
+    transform: translateY(var(--size-md));
   }
   to {
     opacity: 1;

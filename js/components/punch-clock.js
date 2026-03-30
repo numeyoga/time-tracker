@@ -163,6 +163,7 @@ const createPunchListItem = (punch) => {
   // Label
   const labelSpan = document.createElement('span');
   labelSpan.className = 'punch-list__label';
+  labelSpan.dataset.jsPunchLabel = '';
   labelSpan.textContent = punch.label;
   li.appendChild(labelSpan);
 

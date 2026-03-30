@@ -57,9 +57,8 @@ const CLOSE_PATHS = [
 ];
 
 const removeToast = (toast) => {
-  toast.style.opacity = '0';
-  toast.style.transform = 'translateY(var(--space-2))';
-  toast.style.transition = `opacity var(--duration-fast) var(--ease-in), transform var(--duration-fast) var(--ease-in)`;
+  if (toast.dataset.state === 'closing') return;
+  toast.dataset.state = 'closing';
   toast.addEventListener('transitionend', () => toast.remove(), { once: true });
 };
 
@@ -79,6 +78,8 @@ export const showToast = ({ message, variant = 'info', duration = 5000 }) => {
   const toast = document.createElement('div');
   toast.className = 'toast';
   toast.setAttribute('data-variant', variant);
+  toast.dataset.state = 'open';
+  toast.setAttribute('role', 'status');
 
   const iconPaths = ICON_PATHS[variant] ?? ICON_PATHS.info;
   const msgSpan = document.createElement('span');

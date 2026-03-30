@@ -29,8 +29,8 @@
 }
 
 .import-dropzone__icon {
-  width: var(--space-12);
-  height: var(--space-12);
+  width: var(--size-3xl);
+  height: var(--size-3xl);
   color: var(--color-text-muted);
 }
 
@@ -92,8 +92,8 @@
 }
 
 .data-transfer-confirm__icon {
-  width: var(--space-12);
-  height: var(--space-12);
+  width: var(--size-3xl);
+  height: var(--size-3xl);
   color: var(--color-danger);
 }
 

@@ -174,12 +174,12 @@ const renderPunchItem = (punch) => `
       data-js-entry-punch-item
       data-punch-type="${punch.type}"
       ${punch.breakIndex != null ? `data-break-index="${punch.breakIndex}"` : ''}>
-    <div class="entry-management__item-main">
+    <div class="entry-management__item-main" data-js-entry-item-main>
       <span class="entry-management__item-icon" data-color="${punch.color}">
         <svg class="icon" aria-hidden="true" data-color="${punch.color}"><use href="${punch.icon}"></use></svg>
       </span>
       <div class="entry-management__item-copy">
-        <span class="entry-management__item-label">${punch.label}</span>
+        <span class="entry-management__item-label" data-js-entry-item-label>${punch.label}</span>
         <span class="entry-management__item-meta">Pointage ${punch.label.toLowerCase()}</span>
       </div>
       <span class="entry-management__item-time" data-js-entry-punch-time>${msToHHMM(punch.ms)}</span>
@@ -397,7 +397,7 @@ export const openEntryManagementDrawer = ({ filter = null, onChange = () => {} }
     timeEl.hidden = true;
     actionsEl.hidden = true;
     input.value = timeEl.textContent.trim();
-    item.querySelector('.entry-management__item-main')?.appendChild(wrapper);
+    item.querySelector('[data-js-entry-item-main]')?.appendChild(wrapper);
     input.focus();
     input.select();
 
@@ -450,7 +450,7 @@ export const openEntryManagementDrawer = ({ filter = null, onChange = () => {} }
     const day = item.closest('[data-js-entry-day]');
     const punchType = item.dataset.punchType;
     const breakIndex = item.dataset.breakIndex == null ? null : Number(item.dataset.breakIndex);
-    const label = item.querySelector('.entry-management__item-label')?.textContent ?? 'ce pointage';
+    const label = item.querySelector('[data-js-entry-item-label]')?.textContent ?? 'ce pointage';
 
     const confirmed = await openDeleteDialog(label);
     if (!confirmed) return;

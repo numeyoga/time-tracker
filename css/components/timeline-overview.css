@@ -5,7 +5,7 @@
 
 .timeline__bar {
   display: flex;
-  height: var(--space-8);
+  height: var(--size-xl);
   border-radius: var(--radius-md);
   overflow: hidden;
   background-color: var(--color-bg-subtle);
@@ -13,7 +13,7 @@
 
 .timeline__segment {
   flex: none;
-  min-width: var(--space-0-5);
+  min-width: var(--size-2xs);
   border: none;
   padding: 0;
   cursor: pointer;
@@ -47,8 +47,8 @@
 }
 
 .timeline__legend-dot {
-  width: var(--space-2);
-  height: var(--space-2);
+  width: var(--size-sm);
+  height: var(--size-sm);
   border-radius: var(--radius-full);
 }
 

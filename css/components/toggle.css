@@ -27,11 +27,11 @@
 .toggle__thumb {
   position: absolute;
   top: 50%;
-  left: var(--space-0-5);
+  left: var(--size-2xs);
   transform: translateY(-50%);
 
-  width: 0.875rem;
-  height: 0.875rem;
+  width: var(--component-toggle-thumb-size);
+  height: var(--component-toggle-thumb-size);
   border-radius: var(--radius-full);
   background-color: var(--color-bg-default);
   box-shadow: var(--shadow-xs);
@@ -46,7 +46,7 @@
 }
 
 .toggle[aria-checked="true"] .toggle__thumb {
-  left: calc(100% - 0.875rem - var(--space-0-5));
+  left: calc(100% - var(--component-toggle-thumb-size) - var(--size-2xs));
 }
 
 /* Hover */
@@ -62,7 +62,7 @@
 /* Focus visible */
 .toggle:focus-visible {
   outline: var(--border-width-thick) solid var(--color-focus-ring);
-  outline-offset: var(--space-0-5);
+  outline-offset: var(--size-2xs);
   border-radius: var(--radius-sm);
 }
 

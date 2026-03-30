@@ -69,7 +69,7 @@ const createEmptyState = () => {
   emptyState.dataset.size = 'sm';
 
   const icon = createSvgIcon('#icon-calendar-off');
-  icon.classList.add('empty-state__icon');
+  icon.setAttribute('class', 'icon empty-state__icon');
   emptyState.appendChild(icon);
 
   const title = document.createElement('h3');
